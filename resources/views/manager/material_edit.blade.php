@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <h5>اختيار اسم الفرع <span class="text-danger">*</span></h5>
+                    <h5>اختيار المركز الرئيسي <span class="text-danger">*</span></h5>
                     <div class="controls">
                         <select name="subcompany_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار اسم الفرع</option>

@@ -2,7 +2,6 @@
 @section('title')
     اضافة طلب مواد
 @endsection
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 @section('css')
 @endsection
@@ -43,7 +42,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <h5>اختيار اسم المركز الرئيسي <span class="text-danger">*</span></h5>
+                        <h5>اختيار المركز الرئيسي <span class="text-danger">*</span></h5>
                         <div class="controls">
                             <select name="subcompany_id" class="form-control">
                                 <option value="" selected="" disabled="">اختيار اسم المركز الرئيسي</option>
@@ -100,7 +99,7 @@
                     <div class="form-group">
                         <label>الرقم</label>
                         <input type="text" class="form-control" name="number" placeholder="الرقم...">
-                        @error('financial_provision')
+                        @error('number')
                         <span class="text-danger"> {{ $message }}</span>
                         @enderror
                     </div>
@@ -179,54 +178,7 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script>
-        var data = localStorage.getItem('id');
-        $("#company_id").val(data)
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('select[name="company_id"]').on('change',function() {
-                var company_id = $(this).val();
-                if(company_id) {
-                    $.ajax({
-                        url: "{{ url('/company/subcompany/ajax') }}/"+company_id,
-                        type:"GET",
-                        dataType:"json",
-                        success:function(data) {
-                            $('select[name="subsubcompany_id"]').html('');
-                            var d =$('select[name="subcompany_id"]').empty();
-                            $.each(data, function(key, value){
-                                $('select[name="subcompany_id"]').append('<option value="'+ value.id + '">' + value.subcompany_name + '</option>');
-                            });
-                        },
-                    });
-                } else {
-                    alert('danger');
-                }
-            });
 
-            $('select[name="subcompany_id"]').on('change',function() {
-                var subcompany_id = $(this).val();
-                if(subcompany_id) {
-                    $.ajax({
-                        url: "{{ url('/company/sub-subcompany/ajax') }}/"+subcompany_id,
-                        type:"GET",
-                        dataType:"json",
-                        success:function(data) {
-                            var d =$('select[name="subsubcompany_id"]').empty();
-                            $.each(data, function(key, value){
-                                $('select[name="subsubcompany_id"]').append('<option value="'+ value.id + '">' +
-                                    value.subsubcompany_name + '</option>');
-                            });
-                        },
-                    });
-                } else {
-                    alert('danger');
-                }
-            });
-        });
-    </script>
     <script>
         // Select the input field
         var input = document.getElementById('dateInput');
