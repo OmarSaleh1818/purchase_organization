@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('company_id');
             $table->integer('subcompany_id');
-            $table->integer('subsubcomany_id');
+            $table->integer('subsubcompany_id');
             $table->string('teacher_name');
             $table->integer('number');
             $table->string('financial_provision')->nullable();

@@ -67,7 +67,7 @@
                                         <td>{{ $item->gentlemen }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->just }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>
@@ -144,7 +144,7 @@
                                     <td>{{ $item->gentlemen }}</td>
                                     <td>{{ $item->price }}</td>
                                     <td>{{ $item->just }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->financial_provision }}</td>
                                     <td>{{ $item->purchase_name }}</td>
                                     <td>

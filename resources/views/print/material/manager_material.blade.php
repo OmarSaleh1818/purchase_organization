@@ -31,12 +31,14 @@
                 <div class="card card-invoice">
                     <div class="card-body">
                         <div class="invoice-header">
-                            <h1 class="invoice-title">طلب مواد</h1>
-                            <div class="billed-from">
-                                <h3>{{ $purchases['company']['company_name'] }}</h3>
+                            <h1 class="invoice-title"></h1>
+                            <div class="billed-from mr-5">
+                                <h2 style="margin-top: 40px; margin-right: 100px">{{ $purchases['company']['company_name'] }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
+                        <h1 class="invoice-title" style="text-align: center">طلب مواد</h1>
+                        <br>
                         <div class="row mg-t-20">
                             <div class="col-md">
                                 <h5 class="invoice-info"><span>التاريخ :</span>

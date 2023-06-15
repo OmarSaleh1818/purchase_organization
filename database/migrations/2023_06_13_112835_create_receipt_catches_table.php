@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('receipt_catches', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('company_name');
+            $table->integer('company_id');
+            $table->integer('subcompany_id');
+            $table->integer('subsubcompany_id');
             $table->string('gentlemen');
             $table->decimal('price');
             $table->string('currency_type');
             $table->string('just');
-            $table->string('bank_name');
+            $table->integer('bank_id');
             $table->string('check_number');
-            $table->string('project_name');
             $table->integer('project_number');
             $table->string('financial_provision');
             $table->integer('number_financial');

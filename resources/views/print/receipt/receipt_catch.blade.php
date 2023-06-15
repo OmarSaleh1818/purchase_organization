@@ -32,7 +32,7 @@
                         <div class="invoice-header">
                             <h1 class="invoice-title"></h1>
                             <div class="billed-from mr-5">
-                                <h2 style="margin-right: 250px; margin-top: 40px">{{ $catch->company_name }}</h2>
+                                <h2 style="margin-right: 150px;margin-top: 40px">{{ $catch['company']['company_name'] }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -45,7 +45,7 @@
                                 <br>
                                 <br>
                                 <h5 class="invoice-info"><span> المشروع :</span>
-                                    <span style="margin-right: 50px">{{ $catch->project_name }}</span></h5>
+                                    <span style="margin-right: 50px">{{ $catch['subsubcompany']['subsubcompany_name'] }}</span></h5>
                                 <br>
 
                                 <br>
@@ -91,7 +91,7 @@
                             <div class="col-md mr-5">
                                 <br>
                                 <h4 class="invoice-info"><span>البنك المسحوب عليه  :</span>
-                                    <span style="border-style: double">{{ $catch->bank_name }}</span></h4>
+                                    <span style="border-style: double">{{ $catch['bankName']['bank_name'] }}</span></h4>
                                 <br><br>
                             </div>
                             <div class="col-md">

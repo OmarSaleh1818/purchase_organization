@@ -225,7 +225,7 @@ Route::post('/finance/catch/update/{id}', [CommandCatchController::class, 'Finan
     ->name('finance.catch.update');
 
 Route::get('manager/command/catch', [CommandCatchController::class, 'ManagerCommandCatchView']);
-Route::get('/manager/catch/sure/{id}', [CommandCatchController::class, 'ManagerCommandSure'])
+Route::get('/manager/catch/sure/{id}', [CommandCatchController::class, 'ManagerCatchSure'])
     ->name('manager.catch.sure');
 Route::get('/manager/catch/edit/{id}', [CommandCatchController::class, 'ManagerCatchEdit'])
     ->name('manager.catch.edit');

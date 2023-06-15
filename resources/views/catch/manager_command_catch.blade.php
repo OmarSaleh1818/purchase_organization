@@ -52,8 +52,8 @@
                                 <th class="border-bottom-0">السيد/السادة</th>
                                 <th class="border-bottom-0">المخصص المالي</th>
                                 <th class="border-bottom-0">المبلغ</th>
-                                <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">المبلغ كتابة</th>
+                                <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">البنك المسحوب عليه</th>
                                 <th class="border-bottom-0">طباعة</th>
                                 <th class="border-bottom-0">التعديل</th>
@@ -70,9 +70,9 @@
                                         <td>{{ $item->gentlemen }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->project_name }}</td>
                                         <td>{{ $item->just }}</td>
-                                        <td>{{ $item->bank_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
+                                        <td>{{ $item['bankName']['bank_name']  }}</td>
                                         <td>
                                             @if($item->status_id == 1)
                                                 <a href="{{ route('print.catch', $item->id) }}" class="btn btn-secondary"
@@ -92,7 +92,7 @@
                                             @elseif($item->status_id == 7)
                                                 <button class="btn btn-dark">تم موافقة المدير</button>
                                             @elseif($item->status_id == 6)
-                                                <a href="{{ route('manager.command.sure', $item->id) }}" class="btn btn-primary">تاكيد الطلب</a>
+                                                <a href="{{ route('manager.catch.sure', $item->id) }}" class="btn btn-primary">تاكيد الطلب</a>
                                             @elseif($item->status_id == 3)
                                                 <button class="btn btn-danger">تم اصدار سند صرف</button>
                                             @else
@@ -108,9 +108,9 @@
                                         <td>{{ $item->gentlemen }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->project_name }}</td>
                                         <td>{{ $item->just }}</td>
-                                        <td>{{ $item->bank_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
+                                        <td>{{ $item['bankName']['bank_name']  }}</td>
                                         <td>
                                             @if($item->status_id == 1)
                                                 <a href="{{ route('print.catch', $item->id) }}" class="btn btn-secondary"
@@ -130,7 +130,7 @@
                                             @elseif($item->status_id == 7)
                                                 <button class="btn btn-dark">تم تاكيد الطلب</button>
                                             @elseif($item->status_id == 6)
-                                                <a href="{{ route('manager.command.sure', $item->id) }}" class="btn btn-primary">تاكيد الطلب</a>
+                                                <a href="{{ route('manager.catch.sure', $item->id) }}" class="btn btn-primary">تاكيد الطلب</a>
                                             @elseif($item->status_id == 3)
                                                 <button class="btn btn-danger">تم اصدار سند صرف</button>
                                             @else

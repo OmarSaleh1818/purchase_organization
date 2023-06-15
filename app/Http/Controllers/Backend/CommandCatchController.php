@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankName;
 use App\Models\Company;
+use App\Models\SubCompany;
+use App\Models\SubSubCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\CommandCatch;
@@ -20,7 +23,11 @@ class CommandCatchController extends Controller
 
     public function AddCommandCatch() {
         $companies = Company::all();
-        return view('catch.add_catch', compact('companies'));
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
+        return view('catch.add_catch', compact('companies', 'subcompanies'
+        ,'subsubcompanies', 'banks'));
     }
 
     public function CatchStore(Request $request)
@@ -78,26 +85,27 @@ class CommandCatchController extends Controller
             'gentlemen' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ], [
             'date.required' => 'التاريخ مطلوب',
             'gentlemen.required' => 'اسم السيد مطلوب',
             'price.required' => 'المبلغ مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         CommandCatch::insert([
             'date' => $request->date,
             'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'gentlemen' => $request->gentlemen,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,
@@ -117,7 +125,11 @@ class CommandCatchController extends Controller
     public function CommandCatchEdit($id) {
         $companies = Company::all();
         $catch = CommandCatch::findOrFail($id);
-        return view('catch.edit_catch', compact('catch', 'companies'));
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
+        return view('catch.edit_catch', compact('catch', 'companies'
+        ,'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function CatchUpdate(Request $request, $id) {
@@ -174,26 +186,27 @@ class CommandCatchController extends Controller
             'gentlemen' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ], [
             'date.required' => 'التاريخ مطلوب',
             'gentlemen.required' => 'اسم السيد مطلوب',
             'price.required' => 'المبلغ مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         CommandCatch::findOrFail($id)->update([
             'date' => $request->date,
             'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'gentlemen' => $request->gentlemen,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,
@@ -224,7 +237,11 @@ class CommandCatchController extends Controller
 
         $companies = Company::all();
         $catch = CommandCatch::findOrFail($id);
-        return view('catch.finance_edit', compact('catch', 'companies'));
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
+        return view('catch.finance_edit', compact('catch', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function FinanceCatchUpdate(Request $request, $id) {
@@ -281,26 +298,27 @@ class CommandCatchController extends Controller
             'gentlemen' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ], [
             'date.required' => 'التاريخ مطلوب',
             'gentlemen.required' => 'اسم السيد مطلوب',
             'price.required' => 'المبلغ مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         CommandCatch::findOrFail($id)->update([
             'date' => $request->date,
             'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'gentlemen' => $request->gentlemen,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,
@@ -317,7 +335,7 @@ class CommandCatchController extends Controller
         return view('catch.manager_command_catch', compact('catches'));
     }
 
-    public function ManagerCommandSure($id) {
+    public function ManagerCatchSure($id) {
 
         DB::table('command_catches')
             ->where('id', $id)
@@ -330,7 +348,11 @@ class CommandCatchController extends Controller
 
         $companies = Company::all();
         $catch = CommandCatch::findOrFail($id);
-        return view('catch.manager_edit', compact('catch', 'companies'));
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
+        return view('catch.manager_edit', compact('catch', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ManagerCatchUpdate(Request $request, $id) {
@@ -388,26 +410,27 @@ class CommandCatchController extends Controller
             'gentlemen' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ], [
             'date.required' => 'التاريخ مطلوب',
             'gentlemen.required' => 'اسم السيد مطلوب',
             'price.required' => 'المبلغ مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         CommandCatch::findOrFail($id)->update([
             'date' => $request->date,
             'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'gentlemen' => $request->gentlemen,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,

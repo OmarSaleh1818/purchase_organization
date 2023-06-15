@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankName;
 use App\Models\Company;
 use App\Models\multiPurchase;
 use App\Models\PaymentOrder;
@@ -255,7 +256,11 @@ class ManagerController extends Controller
 
         $companies = Company::all();
         $paymentOrder = PaymentOrder::find($id);
-        return view('manager.manager_command_edit', compact('paymentOrder', 'companies'));
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
+        return view('manager.manager_command_edit', compact('paymentOrder',
+            'companies', 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ManagerCommandUpdate(Request $request , $id) {
@@ -312,7 +317,7 @@ class ManagerController extends Controller
             'benefit_name' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ],[
             'date.required' => 'التاريخ مطلوب',
             'benefit_name.required' => 'اسم المستفيد مطلوب',
@@ -324,20 +329,22 @@ class ManagerController extends Controller
         PaymentOrder::findOrFail($id)->update([
             'date' => $request->date,
             'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'benefit_name' => $request->benefit_name,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
-            'iban_number' => $request->iban_number,
+            'iban_id' => $request->iban_id,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,
             'created_at' => Carbon::now(),
         ]);
+
         $request->session()->flash('status', 'تم حفظ امر الدفع بنجاح');
         return redirect('/manager/command');
     }
@@ -347,6 +354,7 @@ class ManagerController extends Controller
         DB::table('payment_orders')
             ->where('id', $id)
             ->update(['status_id' => 7]);
+        Session()->flash('status', 'تم تأكيد الطلب بنجاح');
         return redirect()->back();
     }
 

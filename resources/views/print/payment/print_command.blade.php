@@ -32,7 +32,7 @@
                         <div class="invoice-header">
                             <h1 class="invoice-title"></h1>
                             <div class="billed-from">
-                                <h3 style="margin-right: 250px; margin-top: 40px">{{ $payment['company']['company_name'] }}</h3>
+                                <h3 style="margin-right: 150px; margin-top: 40px">{{ $payment['company']['company_name'] }}</h3>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -45,7 +45,7 @@
                                 <br>
                                 <br>
                                 <h5 class="invoice-info"><span> المشروع :</span>
-                                    <span style="margin-right: 50px">{{ $payment->project_name }}</span></h5>
+                                    <span style="margin-right: 50px">{{ $payment['subsubcompany']['subsubcompany_name'] }}</span></h5>
                                 <br>
 
                                 <br>
@@ -91,7 +91,7 @@
                             <div class="col-md mr-5">
                                 <br>
                                 <h4 class="invoice-info"><span>البنك المسحوب عليه  :</span>
-                                    <span style="border-style: double">{{ $payment->bank_name }}</span></h4>
+                                    <span style="border-style: double">{{ $payment['bankName']['bank_name'] }}</span></h4>
                                 <br><br>
                             </div>
                             <div class="col-md">
@@ -103,7 +103,7 @@
                         </div>
                         <br>
                         <h4 class="invoice-info mr-5"><span>رقم الايبان :</span>
-                            <span style="margin-right: 80px;border-style: double">{{ $payment->iban_number }} </span></h4>
+                            <span style="margin-right: 80px;border-style: double">{{ $payment['bankIban']['iban_number'] }} </span></h4>
                         <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">

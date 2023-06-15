@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->integer('company_id');
+            $table->integer('subcompany_id');
+            $table->integer('subsubcompany_id');
             $table->string('benefit_name');
             $table->decimal('price');
             $table->string('currency_type');
             $table->string('just');
-            $table->string('bank_name');
+            $table->integer('bank_id');
             $table->string('check_number');
-            $table->string('iban_number');
-            $table->string('project_name');
+            $table->integer('iban_id');
             $table->integer('project_number');
             $table->string('financial_provision');
             $table->integer('number_financial');

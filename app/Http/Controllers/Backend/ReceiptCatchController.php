@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankName;
 use App\Models\CommandCatch;
+use App\Models\Company;
 use App\Models\ReceiptCatch;
+use App\Models\SubCompany;
+use App\Models\SubSubCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +17,13 @@ class ReceiptCatchController extends Controller
 {
 
     public function AddReceiptCatch($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $catch = CommandCatch::find($id);
-        return view('receipt.catch.add_receipt_catch', compact('catch'));
+        return view('receipt.catch.add_receipt_catch', compact('catch', 'companies',
+        'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ReceiptCatchStore(Request $request) {
@@ -74,26 +82,27 @@ class ReceiptCatchController extends Controller
             'gentlemen' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
+            'bank_id' => 'required',
         ], [
             'date.required' => 'التاريخ مطلوب',
             'gentlemen.required' => 'اسم السيد مطلوب',
             'price.required' => 'المبلغ مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         ReceiptCatch::insert([
             'date' => $request->date,
-            'company_name' => $request->company_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'gentlemen' => $request->gentlemen,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
             'just' => $result,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'financial_provision' => $request->financial_provision,
             'number_financial' => $request->number_financial,

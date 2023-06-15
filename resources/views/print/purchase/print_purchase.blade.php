@@ -32,13 +32,16 @@
                 <div class="card card-invoice">
                     <div class="card-body">
                         <div class="invoice-header">
-                            <h1 class="invoice-title">طلب شراء</h1>
-                            <div class="billed-from">
-                                <h4>{{ $purchases->company_name }}</h4>
+                            <h1 class="invoice-title"></h1>
+                            <div class="billed-from mr-5">
+                                <h2 style="margin-top: 40px; margin-right: 150px">{{ $purchases->company_name }}</h2>
+
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
+                        <h1 class="invoice-title" style="text-align: center">طلب شراء</h1>
+                        <br>
                         <div class="row mg-t-20">
-                            <div class="col-md">
+                            <div class="col-md mr-5">
                                 <h5 class="invoice-info"><span>السادة :</span>
                                     <span>{{ $purchases->gentlemen }}</span></h5>
                                 <br>
@@ -58,7 +61,7 @@
                                     <span>{{ $purchases->subject }}</span></h5>
                                 <br>
                             </div>
-                            <div class="col-md">
+                            <div class="col-md mr-5">
                                 <h5 class="invoice-info"><span>رقم طلب الشراء :</span>
                                     <span>{{ $purchases->id }}</span></h5>
                                 <br>
@@ -138,7 +141,7 @@
                         </div>
                         <hr class="mg-b-40">
                         <div class="row mg-t-20">
-                            <div class="col-md">
+                            <div class="col-md mr-5">
                                 <h5 class="invoice-info"><span>موقع التسليم :</span>
                                     <span>{{ $purchases->delivery_location }}</span></h5>
                                 <br>

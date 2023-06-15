@@ -47,8 +47,8 @@
                             <tr>
                                 <th class="border-bottom-0">ID</th>
                                 <th class="border-bottom-0">المستفيد</th>
-                                <th class="border-bottom-0">الرقم</th>
                                 <th class="border-bottom-0">المبلغ</th>
+                                <th class="border-bottom-0">المبلغ كتابة</th>
                                 <th class="border-bottom-0">البنك المسحوب عليه</th>
                                 <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">البيان</th>
@@ -64,12 +64,16 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->benefit_name }}</td>
-                                    <td>{{ $item->id }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->bank_name }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item->just }}</td>
+                                    <td>{{ $item['bankName']['bank_name'] }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->purchase_name }}</td>
                                     <td>{{ $item->financial_provision }}</td>
+                                    <td>
+                                        <a href="{{ route('print.command', $item->id) }}" class="btn btn-secondary"
+                                           title="طباعة"><i class="fa fa-print"></i></a>
+                                    </td>
                                     <td>
                                         <a href="{{ route('add.receipt.command', $item->id) }}" class="btn btn-primary">اضافة سند صرف</a>
                                     </td>
@@ -79,20 +83,15 @@
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $item->benefit_name }}</td>
-                                        <td>{{ $item->id }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->bank_name }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item->just }}</td>
+                                        <td>{{ $item['bankName']['bank_name'] }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.command', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.command', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.command', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
                                             <button class="btn btn-success">تم اضافة سند صرف </button>
@@ -124,8 +123,8 @@
                             <tr>
                                 <th class="border-bottom-0">ID</th>
                                 <th class="border-bottom-0">المستفيد</th>
-                                <th class="border-bottom-0">الرقم</th>
                                 <th class="border-bottom-0">المبلغ</th>
+                                <th class="border-bottom-0">المبلغ كتابة</th>
                                 <th class="border-bottom-0">البنك المسحوب عليه</th>
                                 <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">المخصص المالي</th>
@@ -140,10 +139,10 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->benefit_name }}</td>
-                                    <td>{{ $item->id }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->bank_name }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item->just }}</td>
+                                    <td>{{ $item['bankName']['bank_name'] }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->financial_provision }}</td>
                                     <td>{{ $item->purchase_name }}</td>
                                     <td>

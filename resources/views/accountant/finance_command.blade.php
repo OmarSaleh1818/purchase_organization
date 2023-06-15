@@ -47,9 +47,9 @@
                             <tr>
                                 <th class="border-bottom-0">ID</th>
                                 <th class="border-bottom-0">التاريخ</th>
-                                <th class="border-bottom-0">الرقم</th>
                                 <th class="border-bottom-0">المستفيد</th>
                                 <th class="border-bottom-0">المبلغ</th>
+                                <th class="border-bottom-0">المبلغ كتابة</th>
                                 <th class="border-bottom-0">البنك المسحوب عليه</th>
                                 <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">البيان</th>
@@ -64,11 +64,11 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $payment->date }}</td>
-                                    <td>{{ $payment->id }}</td>
                                     <td>{{ $payment->benefit_name }}</td>
                                     <td>{{ $payment->price }}</td>
-                                    <td>{{ $payment->bank_name }}</td>
-                                    <td>{{ $payment->project_name }}</td>
+                                    <td>{{ $payment->just }}</td>
+                                    <td>{{ $payment['bankName']['bank_name'] }}</td>
+                                    <td>{{ $payment['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $payment->purchase_name }}</td>
                                     <td>
                                         @if($payment->status_id == 1)

@@ -13,7 +13,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">المدير العام</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/طباعة طلبات اصدار دفعة</span>
+                <h4 class="content-title mb-0 my-auto">المحاسبة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/طباعة طلبات اصدار دفعة</span>
             </div>
         </div>
     </div>
@@ -27,12 +27,14 @@
                 <div class="card card-invoice">
                     <div class="card-body">
                         <div class="invoice-header">
-                            <h1 class="invoice-title">طلب اصدار دفعة</h1>
-                            <div class="billed-from">
-                                <h3>{{ $payment->company_name }}</h3>
+                            <h1 class="invoice-title"></h1>
+                            <div class="billed-from mr-5">
+                                <h2 style="margin-top: 40px; margin-right: 150px">{{ $payment->company_name }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
+                        <h1 class="invoice-title" style="text-align: center">طلب اصدار دفعة</h1>
+                        <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <h5 class="invoice-info"><span>التاريخ :</span>
@@ -48,8 +50,8 @@
                                     <span>{{ $payment->project_number }}</span></h5>
                                 <br>
                                 <br>
-                                <h2 class="invoice-info"><span>السادة :</span>
-                                    <span>{{ $payment->gentlemen }} المحترمين</span></h2>
+                                <h3 class="invoice-info"><span>السادة :</span>
+                                    <span>{{ $payment->gentlemen }} المحترمين</span></h3>
                                 <br>
                             </div>
                             <div class="col-md">
@@ -61,8 +63,8 @@
                                 <br>
                             </div>
                         </div>
-                        <h4 style="text-align: center"> نأمل اصدار دفعة حسب البيانات ادناه :</h4>
                         <br>
+                        <h4 style="text-align: center"> نأمل اصدار دفعة حسب البيانات ادناه :</h4>
                         <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
@@ -82,16 +84,13 @@
                                 <h4 class="invoice-info"><span>التاريخ المستحق للدفعة  :</span>
                                     <span>{{ $payment->due_date }}</span></h4>
                                 <br>
+                                <h4 class="invoice-info"><span>البيان :</span>
+                                    <span>{{ $payment->	purchase_name }}</span></h4>
                                 <br>
-                                <h3 class="invoice-info"><span>البيان :</span>
-                                    <span>{{ $payment->	purchase_name }}</span></h3>
-                                <br>
-                                <br>
-                                <h3 class="invoice-info"><span>اعده :</span>
-                                    <span></span></h3>
+
+                                <h4 class="invoice-info"><span>اعده :</span>
+                                    <span></span></h4>
                                 <br><br>
-                                <h3 class="invoice-info"><span>راجعه :</span>
-                                    <span></span></h3>
                                 <br><br>
                                 <h3 class="invoice-info"><span>مدير المشتريات والعقود :</span>
                                     <span></span></h3>
@@ -104,9 +103,22 @@
                                 <br>
                                 <br>
                                 <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br> <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <h4 class="invoice-info"><span>راجعه :</span>
+                                    <span></span></h4>
+                                <br>
                             </div>
                         </div>
-                        <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <h5 class="invoice-info"><span>المخصص المالي :</span>
