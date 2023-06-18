@@ -48,11 +48,11 @@
                                 <th class="border-bottom-0">ID</th>
                                 <th class="border-bottom-0">اسم المشروع</th>
                                 <th class="border-bottom-0">السادة</th>
-                                <th class="border-bottom-0">الرقم</th>
                                 <th class="border-bottom-0">البيان</th>
                                 <th class="border-bottom-0">اسم المورد</th>
                                 <th class="border-bottom-0">مبلغ الدفعة</th>
                                 <th class="border-bottom-0">التاريخ المستحق للدفعة</th>
+                                <th class="border-bottom-0">طباعة</th>
                                 <th class="border-bottom-0">عرض الطلب</th>
                                 <th class="border-bottom-0">حالة الطلب</th>
                                 <th class="border-bottom-0"></th>
@@ -63,13 +63,24 @@
                                 @if($item->status_id == 5)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->gentlemen }}</td>
-                                    <td>{{ $item->project_number }}</td>
                                     <td>{{ $item->purchase_name }}</td>
                                     <td>{{ $item->supplier_name }}</td>
                                     <td>{{ $item->batch_payment }}</td>
                                     <td>{{ $item->due_date }}</td>
+                                    <td>
+                                        @if($item->status_id == 1)
+                                            <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
+                                        @elseif($item->status_id == 2)
+                                            <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
+                                        @else
+                                            <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
                                            title="تعديل الطلب "><i class="las la-pen"></i></a>
@@ -82,13 +93,24 @@
                                 @elseif($item->status_id == 6)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->gentlemen }}</td>
-                                        <td>{{ $item->project_number }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>{{ $item->supplier_name }}</td>
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
+                                        <td>
+                                            @if($item->status_id == 1)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @elseif($item->status_id == 2)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @else
+                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
                                                title="تعديل الطلب "><i class="las la-pen"></i></a>
@@ -101,13 +123,24 @@
                                 @elseif($item->status_id == 7)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->gentlemen }}</td>
-                                        <td>{{ $item->project_number }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>{{ $item->supplier_name }}</td>
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
+                                        <td>
+                                            @if($item->status_id == 1)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @elseif($item->status_id == 2)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @else
+                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
                                                title="تعديل الطلب "><i class="las la-pen"></i></a>
@@ -120,13 +153,24 @@
                                 @elseif($item->status_id == 3)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->gentlemen }}</td>
-                                        <td>{{ $item->project_number }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>{{ $item->supplier_name }}</td>
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
+                                        <td>
+                                            @if($item->status_id == 1)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @elseif($item->status_id == 2)
+                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @else
+                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('finance.eye', $item->id) }}" class="btn btn-info"
                                                title="عرض الطلب "><i class="las la-eye"></i></a>

@@ -146,9 +146,9 @@
                                         <td>{{ $item->gentlemen }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->project_name }}</td>
                                         <td>{{ $item->just }}</td>
-                                        <td>{{ $item->bank_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
+                                        <td>{{ $item['bankName']['bank_name']  }}</td>
                                         <td>
                                             @if($item->status_id == 1)
                                                 <a href="{{ route('print.catch', $item->id) }}" class="btn btn-secondary"

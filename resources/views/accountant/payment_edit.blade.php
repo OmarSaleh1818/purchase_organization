@@ -22,7 +22,60 @@
         @csrf
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5> اسم الشركة <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="company_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الشركة</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}" {{ $company->id == $payment->company_id
+                                         ? 'selected' : ''}}>{{ $company->company_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5> المركز الرئيسي <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الفرع</option>
+                            @foreach($subcompanies as $subcompany)
+                                <option value="{{ $subcompany->id }}" {{ $subcompany->id == $payment->subcompany_id
+                                         ? 'selected' : ''}}>{{ $subcompany->subcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5>اسم المشروع <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subsubcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم المشروع</option>
+                            @foreach($subsubcompanies as $subsub)
+                                <option value="{{ $subsub->id }}" {{$subsub->id == $payment->subsubcompany_id ? 'selected' : '' }}>
+                                    {{ $subsub->subsubcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subsubcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم طلب الشراء</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="order_purchase_id" value="{{ $payment->order_purchase_id }}" readonly>
@@ -31,7 +84,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>التاريخ</label><span style="color: red;">  *</span>
                     <input type="date" class="form-control" name="date" value="{{ $payment->date }}">
@@ -40,18 +93,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>اسم المشروع</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="project_name" value="{{ $payment->project_name }}" readonly>
-                    @error('project_name')
-                    <span class="text-danger"> {{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم المشروع</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="project_number" value="{{ $payment->project_number }}" readonly>
@@ -62,7 +104,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>السادة</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="gentlemen" value="{{ $payment->gentlemen }}">
@@ -71,7 +113,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>اسم المرد/المقاول حسب السجل التجاري</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="supplier_name" value="{{ $payment->supplier_name }}">
@@ -80,9 +122,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label> مبلغ الدفعة </label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="batch_payment" value="{{ $payment->batch_payment }}">
@@ -91,7 +131,9 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>التاريخ المستحق للدفعة</label><span style="color: red;">  *</span>
                     <input type="date" class="form-control" name="due_date" value="{{ $payment->due_date }}">
@@ -100,9 +142,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>البيان</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="purchase_name" value="{{ $payment->purchase_name }}" readonly>
@@ -111,7 +151,26 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5>البنك المسحوب عليه <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="bank_id" class="form-control">
+                            <option value="" selected="" disabled="">اختيار اسم البنك </option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->id }}" {{$bank->id == $payment->bank_id ? 'selected' : '' }}>
+                                    {{ $bank->bank_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('bank_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>المخصص المالي</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="financial_provision" value="{{ $payment->financial_provision }}">
@@ -120,9 +179,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>الرقم</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="number" value="{{ $payment->number }}">
@@ -131,15 +188,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>البنك المسحوب عليه</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="bank_name" value="{{ $payment->bank_name }}">
-                    @error('bank_name')
-                    <span class="text-danger"> {{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
+
         </div>
         <div class="d-flex justify-content-between">
             <input type="submit" class="btn btn-info" value="حفظ">

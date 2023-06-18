@@ -29,9 +29,13 @@ class CatchReceiptController extends Controller
     }
 
     public function ReceiptAdd($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $payment = PartialPayment::find($id);
-        return view('receipt.add_receipt', compact('payment'));
+        return view('receipt.add_receipt', compact('payment', 'companies'
+        ,'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ReceiptStore(Request $request) {
@@ -43,32 +47,31 @@ class CatchReceiptController extends Controller
             'benefit' => 'required',
             'currency_type' => 'required',
             'just' => 'required',
-            'bank_name' => 'required',
-            'check_number' => 'required',
-            'iban_number' => 'required',
+            'bank_id' => 'required',
+            'iban_id' => 'required',
 
         ],[
             'date.required' => 'التاريخ مطلوب',
             'benefit.required' => 'المستفيد مطلوب',
             'currency_type.required' => 'نوع العملة مطلوب',
             'just.required' => 'فقط مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
-            'check_number.required' => 'رقم الشيك مطلوب',
-            'iban_number.required' => 'رقم الايبان مطلوب',
+            'bank_id.required' => 'البنك المسحوب عليه مطلوب',
+            'iban_id.required' => 'رقم الايبان مطلوب',
         ]);
 
         ReceiptOrder::insert([
             'date' => $request->date,
             'payment_id' => $request->payment_id,
-            'company_name' => $request->company_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'benefit' => $request->benefit,
             'currency_type' => $request->currency_type,
             'just' => $request->just,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
-            'iban_number' => $request->iban_number,
+            'iban_id' => $request->iban_id,
             'price' => $request->price,
-            'project_name' => $request->project_name,
             'project_number' => $request->project_number,
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
@@ -95,9 +98,13 @@ class CatchReceiptController extends Controller
     }
 
     public function AccountReceiptEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $receipt = ReceiptOrder::findOrFail($id);
-        return view('receipt.edit.account_edit', compact('receipt'));
+        return view('receipt.edit.account_edit', compact('receipt', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function AccountReceiptUpdate(Request $request, $id) {
@@ -156,15 +163,15 @@ class CatchReceiptController extends Controller
             'benefit' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
-            'check_number' => 'required',
-            'iban_number' => 'required',
+            'bank_id' => 'required',
             'financial_provision' => 'required',
         ]);
 
         ReceiptOrder::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
@@ -173,9 +180,9 @@ class CatchReceiptController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
-            'iban_number' => $request->iban_number,
+            'iban_id' => $request->iban_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -188,6 +195,7 @@ class CatchReceiptController extends Controller
         DB::table('receipt_orders')
             ->where('id', $id)
             ->update(['status_id' => 5]);
+        Session()->flash('status', 'تم تأكيد الطلب بنجاح');
         return redirect()->back();
     }
 
@@ -197,8 +205,13 @@ class CatchReceiptController extends Controller
     }
 
     public function FinanceReceiptEdit($id) {
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $receipt = ReceiptOrder::findOrFail($id);
-        return view('receipt.edit.finance_edit', compact('receipt'));
+        return view('receipt.edit.finance_edit', compact('receipt', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function FinanceReceiptUpdate(Request $request, $id) {
@@ -257,15 +270,15 @@ class CatchReceiptController extends Controller
             'benefit' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
-            'check_number' => 'required',
-            'iban_number' => 'required',
+            'bank_id' => 'required',
             'financial_provision' => 'required',
         ]);
 
         ReceiptOrder::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
@@ -274,9 +287,9 @@ class CatchReceiptController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
-            'iban_number' => $request->iban_number,
+            'iban_id' => $request->iban_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -289,6 +302,7 @@ class CatchReceiptController extends Controller
         DB::table('receipt_orders')
             ->where('id', $id)
             ->update(['status_id' => 6]);
+        Session()->flash('status', 'تم تأكيد الطلب بنجاح');
         return redirect()->back();
     }
 

@@ -90,7 +90,7 @@
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <br>
-                                <h4 class="invoice-info"><span>البنك المسحوب عليه  :</span>
+                                <h4 class="invoice-info"><span>البنك :</span>
                                     <span style="border-style: double">{{ $catch['bankName']['bank_name'] }}</span></h4>
                                 <br><br>
                             </div>
@@ -101,6 +101,10 @@
                                     <span style="border-style: double">{{ $catch->check_number }}</span></h4>
                             </div>
                         </div>
+                        <br>
+                        <h4 class="invoice-info mr-5"><span>رقم الايبان :</span>
+                            <span style="margin-right: 100px;border-style: double">{{ $catch['bankIban']['iban_number'] }} </span></h4>
+                        <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <br>

@@ -38,7 +38,7 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    اضافة سند القبض
+                    امر القبض
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -90,7 +90,7 @@
                                         <td>{{ $item->gentlemen }}</td>
                                         <td>{{ $item->price }}</td>
                                         <td>{{ $item->just }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>
@@ -116,7 +116,8 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    سندات القبض
+                    <a href="{{ route('add.safe.catch') }}" class="btn btn-primary">اضافة سند قبض </a>
+                    <i class="mdi mdi-dots-horizontal text-gray"></i>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -153,7 +154,7 @@
                                     </td>
                                     <td>
                                         @if($item->status_id == 1)
-                                            <button class="btn btn-primary">تم اضافة سند قبض</button>
+                                            <button class="btn btn-dark">تم اصدار سند قبض</button>
                                         @elseif($item->status_id == 5)
                                             <button class="btn btn-success">تم موافقة المحاسبة</button>
                                         @elseif($item->status_id == 6)

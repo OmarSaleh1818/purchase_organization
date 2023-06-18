@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankName;
+use App\Models\Company;
 use App\Models\MultiPayment;
 use App\Models\MultiPurchaseOrder;
+use App\Models\SubCompany;
+use App\Models\SubSubCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Payment;
@@ -19,7 +23,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $purchases = PurchaseOrder::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $purchases = PurchaseOrder::orderBy('id', 'DESC')->get();
         $payments = Payment::all();
         return view('payment.payment_page', compact('payments', 'purchases'));
     }
@@ -31,11 +35,14 @@ class PaymentController extends Controller
     }
 
     public function PaymentPurchaseEdit($id) {
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
         $purchases = PurchaseOrder::findOrFail($id);
         $multi_purchase = MultiPurchaseOrder::where('purchaseOrder_id', $id)->get();
         $multi_payment = MultiPayment::where('payment_id', $id)->get();
         return view('payment.payment_purchase_edit', compact('purchases',
-            'multi_purchase', 'multi_payment'));
+            'multi_purchase', 'multi_payment', 'companies', 'subcompanies', 'subsubcompanies'));
     }
 
     public function PaymentPurchaseUpdate(Request $request, $id) {
@@ -63,13 +70,14 @@ class PaymentController extends Controller
             'delivery_date.required' => 'تاريخ التسليم مطلوب',
         ]);
             PurchaseOrder::findOrFail($id)->update([
-                'company_name' => $request->company_name,
+                'company_id' => $request->company_id,
+                'subcompany_id' => $request->subcompany_id,
+                'subsubcompany_id' => $request->subsubcompany_id,
                 'gentlemen' => $request->gentlemen,
                 'professor_care' => $request->professor_care,
                 'order_purchase_number' => $request->order_material_id,
                 'order_purchase_date' => $request->order_purchase_date,
                 'order_material_id' => $request->order_material_id,
-                'project_name' => $request->project_name,
                 'project_number' => $request->project_number,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
@@ -254,12 +262,15 @@ class PaymentController extends Controller
     }
 
     public function AddPartialPayment($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $multi_purchase = MultiPurchaseOrder::where('purchaseOrder_id', $id)->get();
         $purchases = PurchaseOrder::find($id);
         $multi_payment = MultiPayment::where('payment_id', $id)->get();
         return view('payment.partial_payment', compact('purchases',
-            'multi_purchase', 'multi_payment'));
+            'multi_purchase', 'multi_payment', 'companies', 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function PartialPaymentStore(Request $request) {
@@ -330,8 +341,9 @@ class PaymentController extends Controller
                     PartialPayment::insert([
                         'number_order' =>  $request->order_purchase_id,
                         'date' => $request->date,
-                        'company_name' => $request->company_name,
-                        'project_name' => $request->project_name,
+                        'company_id' => $request->company_id,
+                        'subcompany_id' => $request->subcompany_id,
+                        'subsubcompany_id' => $request->subsubcompany_id,
                         'project_number' => $request->project_number,
                         'order_purchase_id' => $request->order_purchase_id,
                         'gentlemen' => $request->gentlemen,
@@ -343,7 +355,7 @@ class PaymentController extends Controller
                         'financial_provision' => $request->financial_provision,
                         'due_date' => $paymentDate,
                         'number' => $request->number,
-                        'bank_name' => $request->bank_name,
+                        'bank_id' => $request->bank_id,
                         'description' => $request->description,
                         'created_at' => Carbon::now(),
                     ]);

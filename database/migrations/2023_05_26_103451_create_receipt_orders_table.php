@@ -14,15 +14,17 @@ return new class extends Migration
         Schema::create('receipt_orders', function (Blueprint $table) {
             $table->id();
             $table->integer('payment_id');
+            $table->integer('company_id');
+            $table->integer('subcompany_id');
+            $table->integer('subsubcompany_id');
             $table->date('date');
             $table->string('benefit');
             $table->decimal('price');
             $table->string('currency_type');
             $table->string('just');
-            $table->string('bank_name');
+            $table->integer('bank_id');
             $table->bigInteger('check_number');
-            $table->bigInteger('iban_number');
-            $table->string('project_name');
+            $table->integer('iban_id');
             $table->integer('project_number');
             $table->string('financial_provision');
             $table->integer('number');

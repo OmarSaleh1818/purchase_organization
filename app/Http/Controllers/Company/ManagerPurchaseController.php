@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankName;
+use App\Models\Company;
 use App\Models\multiPurchase;
 use App\Models\MultiPurchaseOrder;
 use App\Models\MultiPayment;
 use App\Models\Payment;
 use App\Models\PartialPayment;
 use App\Models\PurchaseOrder;
+use App\Models\SubCompany;
+use App\Models\SubSubCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,17 +22,19 @@ class ManagerPurchaseController extends Controller
 
     public function ManagerPurchaseView() {
 
-        $purchases = PurchaseOrder::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $purchases = PurchaseOrder::orderBy('id', 'DESC')->get();
         return view('manager_purchase.purchase_view', compact( 'purchases'));
     }
 
     public function ManagerPurchaseEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
         $purchases = PurchaseOrder::findOrFail($id);
         $multi_purchase = MultiPurchaseOrder::where('purchaseOrder_id', $id)->get();
         $multi_payment = MultiPayment::where('payment_id', $id)->get();
         return view('manager_purchase.purchase_edit', compact('purchases',
-            'multi_purchase', 'multi_payment'));
+            'multi_purchase', 'multi_payment', 'companies', 'subcompanies', 'subsubcompanies'));
     }
 
     public function ManagerPurchaseUpdate(Request $request, $id) {
@@ -57,12 +63,14 @@ class ManagerPurchaseController extends Controller
             'delivery_date.required' => 'تاريخ التسليم مطلوب',
         ]);
             PurchaseOrder::findOrFail($id)->update([
+                'company_id' => $request->company_id,
+                'subcompany_id' => $request->subcompany_id,
+                'subsubcompany_id' => $request->subsubcompany_id,
                 'gentlemen' => $request->gentlemen,
                 'professor_care' => $request->professor_care,
                 'order_purchase_number' => $request->order_material_id,
                 'order_purchase_date' => $request->order_purchase_date,
                 'order_material_id' => $request->order_material_id,
-                'project_name' => $request->project_name,
                 'project_number' => $request->project_number,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,
@@ -162,9 +170,13 @@ class ManagerPurchaseController extends Controller
     }
 
     public function ManagerPaymentEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $payment = PartialPayment::findOrFail($id);
-        return view('manager_purchase.payment_edit', compact('payment'));
+        return view('manager_purchase.payment_edit', compact('payment', 'companies'
+        ,'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ManagerPaymentUpdate(Request $request, $id) {
@@ -226,7 +238,6 @@ class ManagerPurchaseController extends Controller
             'due_date' => 'required',
             'financial_provision' => 'required',
             'number' => 'required',
-            'bank_name' => 'required',
         ], [
             'date.required' => 'التاريخ  مطلوب',
             'gentlemen.required' => 'اسم السادة مطلوب',
@@ -235,12 +246,13 @@ class ManagerPurchaseController extends Controller
             'due_date.required' => 'التاريخ المستحق للدفعة مطلوب',
             'financial_provision.required' => 'المخصص المالي مطلوب',
             'number.required' => 'الرقم مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         PartialPayment::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'order_purchase_id' => $request->order_purchase_id,
             'gentlemen' => $request->gentlemen,
@@ -251,7 +263,7 @@ class ManagerPurchaseController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'created_at' => Carbon::now(),
         ]);
 

@@ -9,7 +9,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الخزنة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة امر قبض</span>
+                <h4 class="content-title mb-0 my-auto">الخزنة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة سند قبض</span>
             </div>
         </div>
     </div>
@@ -130,7 +130,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <h5>البنك المسحوب عليه <span class="text-danger">*</span></h5>
+                    <h5>البنك  <span class="text-danger">*</span></h5>
                     <div class="controls">
                         <select name="bank_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار اسم البنك </option>
@@ -147,6 +147,24 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
+                    <h5>اختيار رقم الايبان <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="iban_id" class="form-control">
+                            <option value="" selected="" disabled="">اختيار الايبان</option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->id }}">{{ $bank->iban_number }}</option>
+                            @endforeach
+                        </select>
+                        @error('iban_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
                     <label>رقم الشيك</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="check_number" value="{{ $catch->check_number }}" placeholder="الوحدة...">
                     @error('check_number')
@@ -154,8 +172,6 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>رقم المشروع</label><span style="color: red;">  *</span>
@@ -165,6 +181,8 @@
                     @enderror
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>المخصص المالي</label><span style="color: red;">  *</span>
@@ -175,8 +193,6 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>رقم المخصص المالي</label><span style="color: red;">  *</span>

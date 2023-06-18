@@ -30,12 +30,13 @@
                 <div class="card card-invoice">
                     <div class="card-body">
                         <div class="invoice-header">
-                            <h1 class="invoice-title">سند صرف نقدي / بنكي</h1>
-                            <div class="billed-from">
-                                <h3>{{ $receipt->company_name }}</h3>
+                            <h1 class="invoice-title"></h1>
+                            <div class="billed-from mr-5">
+                                <h2 style="margin-right: 150px">{{ $receipt['company']['company_name'] }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
+                        <h1 class="invoice-title" style="text-align: center">سند صرف نقدي / بنكي</h1>
                         <br>
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
@@ -44,7 +45,7 @@
                                 <br>
                                 <br>
                                 <h5 class="invoice-info"><span> المشروع :</span>
-                                    <span style="margin-right: 50px">{{ $receipt->project_name }}</span></h5>
+                                    <span style="margin-right: 50px">{{ $receipt['subsubcompany']['subsubcompany_name'] }}</span></h5>
                                 <br>
 
                                 <br>
@@ -80,13 +81,13 @@
                                 <br>
                                 <br>
                                 <h4 class="invoice-info"><span>البنك المسحوب عليه  :</span>
-                                    <span style="margin-right: 50px; border-style: double">{{ $receipt->bank_name }}</span></h4>
+                                    <span style="margin-right: 50px; border-style: double">{{ $receipt['bankName']['bank_name'] }}</span></h4>
                                 <br>
                                 <br>
                                 <br>
                                 <br>
                                 <h3 class="invoice-info"><span>رقم الايبان :</span>
-                                    <span style="border-style: double">{{ $receipt->iban_number }}</span></h3>
+                                    <span style="border-style: double">{{ $receipt['bankIban']['iban_number'] }}</span></h3>
                                 <br>
                                 <br>
                                 <br>

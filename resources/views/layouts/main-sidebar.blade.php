@@ -58,6 +58,7 @@
                                 <li><a class="slide-item" href="{{ url('/' . $page='accountant') }}">طلبات اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='command/pay') }}">امر دفع نقدي/بنكي</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='account/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" href="{{ url('/' . $page='account/catch') }}">سندات القبض</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>

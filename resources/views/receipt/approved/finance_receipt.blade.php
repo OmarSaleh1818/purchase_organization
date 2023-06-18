@@ -67,8 +67,8 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $item->benefit }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->bank_name }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['bankName']['bank_name'] }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>
@@ -105,8 +105,8 @@
                                             <td>{{ $key+1 }}</td>
                                             <td>{{ $item->benefit }}</td>
                                             <td>{{ $item->price }}</td>
-                                            <td>{{ $item->bank_name }}</td>
-                                            <td>{{ $item->project_name }}</td>
+                                            <td>{{ $item['bankName']['bank_name'] }}</td>
+                                            <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                             <td>{{ $item->financial_provision }}</td>
                                             <td>{{ $item->purchase_name }}</td>
                                             <td>
@@ -143,8 +143,8 @@
                                         <td>{{ $key+1 }}</td>
                                         <td>{{ $item->benefit }}</td>
                                         <td>{{ $item->price }}</td>
-                                        <td>{{ $item->bank_name }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['bankName']['bank_name'] }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>

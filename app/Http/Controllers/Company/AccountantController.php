@@ -24,9 +24,13 @@ class AccountantController extends Controller
     }
 
     public function PaymentEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $payment = PartialPayment::find($id);
-        return view('accountant.payment_edit', compact('payment'));
+        return view('accountant.payment_edit', compact('payment', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function AccountUpdate(Request $request, $id) {
@@ -87,7 +91,6 @@ class AccountantController extends Controller
             'due_date' => 'required',
             'financial_provision' => 'required',
             'number' => 'required',
-            'bank_name' => 'required',
         ], [
             'date.required' => 'التاريخ  مطلوب',
             'gentlemen.required' => 'اسم السادة مطلوب',
@@ -96,12 +99,13 @@ class AccountantController extends Controller
             'due_date.required' => 'التاريخ المستحق للدفعة مطلوب',
             'financial_provision.required' => 'المخصص المالي مطلوب',
             'number.required' => 'الرقم مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         PartialPayment::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'order_purchase_id' => $request->order_purchase_id,
             'gentlemen' => $request->gentlemen,
@@ -112,7 +116,7 @@ class AccountantController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -205,7 +209,9 @@ class AccountantController extends Controller
 
         Payment::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'order_purchase_id' => $request->order_purchase_id,
             'gentlemen' => $request->gentlemen,
@@ -216,7 +222,7 @@ class AccountantController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -226,7 +232,7 @@ class AccountantController extends Controller
 
     public function FinanceView() {
 
-        $payments = PartialPayment::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $payments = PartialPayment::orderBy('id', 'DESC')->get();
         return view('accountant.finance_view', compact('payments'));
     }
 
@@ -240,9 +246,13 @@ class AccountantController extends Controller
     }
 
     public function FinanceEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $payment = PartialPayment::find($id);
-        return view('accountant.finance_edit', compact('payment'));
+        return view('accountant.finance_edit', compact('payment', 'companies'
+        , 'subsubcompanies', 'subcompanies', 'banks'));
     }
 
     public function FinanceUpdate(Request $request, $id) {
@@ -304,7 +314,6 @@ class AccountantController extends Controller
             'due_date' => 'required',
             'financial_provision' => 'required',
             'number' => 'required',
-            'bank_name' => 'required',
         ], [
             'date.required' => 'التاريخ  مطلوب',
             'gentlemen.required' => 'اسم السادة مطلوب',
@@ -313,12 +322,13 @@ class AccountantController extends Controller
             'due_date.required' => 'التاريخ المستحق للدفعة مطلوب',
             'financial_provision.required' => 'المخصص المالي مطلوب',
             'number.required' => 'الرقم مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
         ]);
 
         PartialPayment::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'order_purchase_id' => $request->order_purchase_id,
             'gentlemen' => $request->gentlemen,
@@ -329,7 +339,7 @@ class AccountantController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -349,7 +359,7 @@ class AccountantController extends Controller
 
     public function FinanceCommandView() {
 
-        $paymentOrder = PaymentOrder::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $paymentOrder = PaymentOrder::orderBy('id', 'DESC')->get();
         return view('accountant.finance_command', compact('paymentOrder'));
     }
 

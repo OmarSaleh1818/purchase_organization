@@ -48,7 +48,7 @@
                                 <th class="border-bottom-0">ID</th>
                                 <th class="border-bottom-0">اسم المشروع</th>
                                 <th class="border-bottom-0">السادة</th>
-                                <th class="border-bottom-0">الرقم</th>
+                                <th class="border-bottom-0">البنك</th>
                                 <th class="border-bottom-0">البيان</th>
                                 <th class="border-bottom-0">اسم المورد</th>
                                 <th class="border-bottom-0">مبلغ الدفعة</th>
@@ -63,9 +63,9 @@
                                 @if($item->status_id == 7)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $item->project_name }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                         <td>{{ $item->gentlemen }}</td>
-                                        <td>{{ $item->project_number }}</td>
+                                        <td>{{ $item['bankName']['bank_name'] }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>{{ $item->supplier_name }}</td>
                                         <td>{{ $item->batch_payment }}</td>
@@ -94,9 +94,9 @@
                                     @elseif($item->status_id == 3)
                                         <tr>
                                             <td>{{ $key+1 }}</td>
-                                            <td>{{ $item->project_name }}</td>
+                                            <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                             <td>{{ $item->gentlemen }}</td>
-                                            <td>{{ $item->project_number }}</td>
+                                            <td>{{ $item['bankName']['bank_name'] }}</td>
                                             <td>{{ $item->purchase_name }}</td>
                                             <td>{{ $item->supplier_name }}</td>
                                             <td>{{ $item->batch_payment }}</td>
@@ -161,8 +161,8 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->benefit }}</td>
                                     <td>{{ $item->price }}</td>
-                                    <td>{{ $item->bank_name }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item['bankName']['bank_name'] }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->financial_provision }}</td>
                                     <td>{{ $item->purchase_name }}</td>
                                     <td>
@@ -185,7 +185,7 @@
                                         @elseif($item->status_id == 6)
                                             <button class="btn btn-secondary">تم موافقة المالية</button>
                                         @elseif($item->status_id == 7)
-                                            <button class="btn btn-danger">تم الاعتماد</button>
+                                            <button class="btn btn-dark">تم الاعتماد</button>
                                         @endif
                                     </td>
                                     <td></td>

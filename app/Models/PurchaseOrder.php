@@ -11,6 +11,23 @@ class PurchaseOrder extends Model
 
     protected $guarded = [];
 
+    public function company() {
+
+        return $this->belongsTo(Company::class, 'company_id','id');
+    }
+
+    public function subcompany() {
+
+        return $this->belongsTo(SubCompany::class, 'subcompany_id','id');
+
+    }
+
+    public function subsubcompany() {
+
+        return $this->belongsTo(SubSubCompany::class, 'subsubcompany_id','id');
+
+    }
+
     public function payment()
     {
         return $this->hasOne(Payment::class, 'order_purchase_id');

@@ -52,7 +52,7 @@
                                 <th class="border-bottom-0">مبلغ الدفعة</th>
                                 <th class="border-bottom-0">المبلغ كتابة</th>
                                 <th class="border-bottom-0">تاريخ الاستحقاق</th>
-                                <th class="border-bottom-0">البنك المسحوب عليه</th>
+                                <th class="border-bottom-0">المخصص المالي</th>
                                 <th class="border-bottom-0">طباعة</th>
                                 <th class="border-bottom-0">التعديل</th>
                                 <th class="border-bottom-0">حالة الطلب</th>
@@ -64,12 +64,12 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->gentlemen }}</td>
-                                    <td>{{ $item->project_name }}</td>
+                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
                                     <td>{{ $item->supplier_name }}</td>
                                     <td>{{ $item->batch_payment }}</td>
                                     <td>{{ $item->price_name }}</td>
                                     <td>{{ $item->due_date }}</td>
-                                    <td>{{ $item->bank_name }}</td>
+                                    <td>{{ $item->financial_provision }}</td>
                                     <td>
                                         @if($item->status_id == 1)
                                             <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"

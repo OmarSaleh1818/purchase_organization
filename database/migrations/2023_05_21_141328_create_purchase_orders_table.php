@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name');
+            $table->integer('company_id');
+            $table->integer('subcompany_id');
+            $table->integer('subsubcompany_id');
             $table->string('gentlemen');
             $table->string('professor_care');
             $table->integer('order_purchase_number');
             $table->unsignedBigInteger('order_material_id');
             $table->date('order_purchase_date');
-            $table->string('project_name');
             $table->integer('project_number');
             $table->string('address');
             $table->string('phone_number');

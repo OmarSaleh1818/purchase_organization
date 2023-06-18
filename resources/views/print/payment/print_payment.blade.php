@@ -29,7 +29,7 @@
                         <div class="invoice-header">
                             <h1 class="invoice-title"></h1>
                             <div class="billed-from mr-5">
-                                <h2 style="margin-top: 40px; margin-right: 150px">{{ $payment->company_name }}</h2>
+                                <h2 style="margin-right: 150px">{{ $payment['company']['company_name'] }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -44,7 +44,7 @@
                                     <span>{{ $payment->number_order }}</span></h5>
                                 <br>
                                 <h5 class="invoice-info"><span>اسم المشروع :</span>
-                                    <span>{{ $payment->project_name }}</span></h5>
+                                    <span>{{ $payment['subsubcompany']['subsubcompany_name'] }}</span></h5>
                                 <br>
                                 <h5 class="invoice-info"><span>رقم المشروع :</span>
                                     <span>{{ $payment->project_number }}</span></h5>

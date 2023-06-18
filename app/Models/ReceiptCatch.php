@@ -39,4 +39,10 @@ class ReceiptCatch extends Model
 
     }
 
+    public function bankIban() {
+
+        return $this->belongsTo(BankName::class, 'iban_id','id');
+
+    }
+
 }

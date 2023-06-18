@@ -19,6 +19,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\Backend\CommandCatchController;
 use App\Http\Controllers\Backend\ReceiptCatchController;
+use App\Http\Controllers\Backend\AccountCatchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,8 +131,16 @@ Route::post('/account/update/{id}', [AccountantController::class, 'AccountUpdate
 Route::get('/account/sure/{id}', [AccountantController::class, 'AccountSure'])->name('account.sure');
 Route::get('/account/eye/{id}', [AccountantController::class, 'AccountEye'])->name('account.eye');
 Route::post('/account/eye/update/{id}', [AccountantController::class, 'AccountEyeUpdate'])->name('accounteye.update');
-
 // end Accountant Route
+
+// All Account Catch
+Route::get('account/catch', [AccountCatchController::class, 'AccountCatchView']);
+Route::get('add/account/catch',  [AccountCatchController::class, 'AddAccountCatch'])->name('add.account.catch');
+Route::post('/account/catch/store', [AccountCatchController::class, 'AccountCatchStore'])->name('account.catch.store');
+Route::get('add/safe/catch',  [AccountCatchController::class, 'AddSafeCatch'])->name('add.safe.catch');
+Route::post('/safe/catch/store', [AccountCatchController::class, 'SafeCatchStore'])->name('safe.catch.store');
+
+// end Account Catch
 
 // All Finance Route
 Route::get('finance', [AccountantController::class, 'FinanceView']);

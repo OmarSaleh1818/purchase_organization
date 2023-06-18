@@ -34,7 +34,7 @@
                         <div class="invoice-header">
                             <h1 class="invoice-title"></h1>
                             <div class="billed-from mr-5">
-                                <h2 style="margin-top: 40px; margin-right: 150px">{{ $purchases->company_name }}</h2>
+                                <h2 style="margin-top: 40px; margin-right: 150px">{{ $purchases['company']['company_name'] }}</h2>
 
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -69,7 +69,7 @@
                                     <span>{{ $purchases->order_purchase_date }}</span></h5>
                                 <br>
                                 <h5 class="invoice-info"><span>اسم المشروع :</span>
-                                    <span>{{ $purchases->project_name }}</span></h5>
+                                    <span>{{ $purchases['subsubcompany']['subsubcompany_name'] }}</span></h5>
                                 <br>
                                 <h5 class="invoice-info"><span>رقم المشروع :</span>
                                     <span>{{ $purchases->project_number }}</span></h5>

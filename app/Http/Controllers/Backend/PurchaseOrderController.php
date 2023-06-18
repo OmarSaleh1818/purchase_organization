@@ -22,16 +22,20 @@ class PurchaseOrderController extends Controller
      */
     public function index()
     {
-        $purchase = Purchase::orderBy('status_id', 'DESC')->orderBy('id', 'ASC')->get();
+        $purchase = Purchase::orderBy('id', 'DESC')->get();
         $purchases = PurchaseOrder::all();
         return view('purchases.purchase_order', compact('purchases', 'purchase'));
     }
 
     public function AddPurchase($id) {
 
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
         $multi_purchase = multiPurchase::where('purchase_id', $id)->get();
         $purchase = Purchase::find($id);
-        return view('purchases.add_purchase', compact('purchase', 'multi_purchase'));
+        return view('purchases.add_purchase', compact('purchase', 'multi_purchase'
+        ,'companies', 'subcompanies', 'subsubcompanies'));
     }
 
     /**
@@ -68,13 +72,14 @@ class PurchaseOrderController extends Controller
             'total_vat.required' => 'الاجمالي بعد الضريبة مطلوب',
         ]);
             $purchaseOrder_id = PurchaseOrder::insertGetId([
-                'company_name' => $request->company_name,
+                'company_id' => $request->company_id,
+                'subcompany_id' => $request->subcompany_id,
+                'subsubcompany_id' => $request->subsubcompany_id,
                 'gentlemen' => $request->gentlemen,
                 'professor_care' => $request->professor_care,
                 'order_purchase_number' => $request->order_material_id,
                 'order_purchase_date' => $request->order_purchase_date,
                 'order_material_id' => $request->order_material_id,
-                'project_name' => $request->project_name,
                 'project_number' => $request->project_number,
                 'address' => $request->address,
                 'phone_number' => $request->phone_number,

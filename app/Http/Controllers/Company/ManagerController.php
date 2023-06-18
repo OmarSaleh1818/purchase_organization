@@ -152,9 +152,13 @@ class ManagerController extends Controller
     }
 
     public function ManagerReceiptEdit($id) {
-
+        $companies = Company::all();
+        $subcompanies = SubCompany::all();
+        $subsubcompanies = SubSubCompany::all();
+        $banks = BankName::all();
         $receipt = ReceiptOrder::findOrFail($id);
-        return view('receipt.edit.manager_edit', compact('receipt'));
+        return view('receipt.edit.manager_edit', compact('receipt', 'companies'
+        , 'subcompanies', 'subsubcompanies', 'banks'));
     }
 
     public function ManagerReceiptUpdate(Request $request, $id) {
@@ -212,15 +216,14 @@ class ManagerController extends Controller
             'benefit' => 'required',
             'price' => 'required',
             'currency_type' => 'required',
-            'bank_name' => 'required',
-            'check_number' => 'required',
-            'iban_number' => 'required',
-            'financial_provision' => 'required',
+            'bank_id' => 'required',
         ]);
 
         ReceiptOrder::findOrFail($id)->update([
             'date' => $request->date,
-            'project_name' => $request->project_name,
+            'company_id' => $request->company_id,
+            'subcompany_id' => $request->subcompany_id,
+            'subsubcompany_id' => $request->subsubcompany_id,
             'project_number' => $request->project_number,
             'price' => $request->price,
             'currency_type' => $request->currency_type,
@@ -229,9 +232,9 @@ class ManagerController extends Controller
             'purchase_name' => $request->purchase_name,
             'financial_provision' => $request->financial_provision,
             'number' => $request->number,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'check_number' => $request->check_number,
-            'iban_number' => $request->iban_number,
+            'iban_id' => $request->iban_id,
             'created_at' => Carbon::now(),
         ]);
 
@@ -243,6 +246,7 @@ class ManagerController extends Controller
         DB::table('receipt_orders')
             ->where('id', $id)
             ->update(['status_id' => 7]);
+        Session()->flash('status', 'تم تأكيد الطلب بنجاح');
         return redirect()->back();
     }
 

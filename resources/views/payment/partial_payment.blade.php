@@ -69,21 +69,66 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label>اسم الشركة</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="company_name" value="{{ $purchases->company_name }}" readonly>
+                    <h5> اسم الشركة <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="company_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الشركة</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}" {{ $company->id == $purchases->company_id
+                                         ? 'selected' : ''}}>{{ $company->company_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5> المركز الرئيسي <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الفرع</option>
+                            @foreach($subcompanies as $subcompany)
+                                <option value="{{ $subcompany->id }}" {{ $subcompany->id == $purchases->subcompany_id
+                                         ? 'selected' : ''}}>{{ $subcompany->subcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5>اسم المشروع <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subsubcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم المشروع</option>
+                            @foreach($subsubcompanies as $subsub)
+                                <option value="{{ $subsub->id }}" {{$subsub->id == $purchases->subsubcompany_id ? 'selected' : '' }}>
+                                    {{ $subsub->subsubcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subsubcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>السعر الاجمالي</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="price" value="{{ $purchases->total_vat }}" readonly>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم طلب الشراء</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="order_purchase_id" value="{{ $purchases->id }}" readonly>
@@ -92,7 +137,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>التاريخ</label><span style="color: red;">  *</span>
                     <input type="date" class="form-control" name="date" id="dateInput" placeholder="التاريخ...">
@@ -103,16 +148,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>اسم المشروع</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="project_name" value="{{ $purchases->project_name }}" readonly>
-                    @error('project_name')
-                    <span class="text-danger"> {{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم المشروع</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="project_number" value="{{ $purchases->project_number }}" readonly>
@@ -121,9 +157,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>السادة</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="gentlemen" value="{{ $purchases->gentlemen }}" placeholder="التاريخ...">
@@ -132,7 +166,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>اسم المورد/المقاول حسب السجل التجاري</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="supplier_name" required placeholder="اسم المورد/المقاول حسب السجل التجاري...">
@@ -144,7 +178,7 @@
         </div>
         <div class="row">
             @foreach($multi_purchase as $multi)
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>البيان</label><span style="color: red;">  *</span>
                         <input type="text" class="form-control" name="purchase_name" value="{{ $multi->purchase_name }}" readonly>
@@ -156,7 +190,7 @@
             @endforeach
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>المخصص المالي</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="financial_provision" value="{{ $purchases->financial_provision }}" placeholder="المخصص المالي...">
@@ -165,7 +199,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>الرقم</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="number" value="{{ $purchases->number }}" placeholder=" الرقم...">
@@ -174,19 +208,22 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label>البنك المسحوب عليه</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="bank_name" placeholder="البنك المسحوب عليه...">
-                    @error('bank_name')
-                    <span class="text-danger"> {{ $message }}</span>
-                    @enderror
+                    <h5>البنك المسحوب عليه <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="bank_id" class="form-control">
+                            <option value="" selected="" disabled="">اختيار اسم البنك </option>
+                            @foreach($banks as $bank)
+                                <option value="{{ $bank->id }}">
+                                    {{ $bank->bank_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('bank_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-
             </div>
         </div>
 

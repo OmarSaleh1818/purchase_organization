@@ -23,7 +23,60 @@
 
         <input type="hidden" name="id" value=" {{ $purchases->id }} ">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5> اسم الشركة <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="company_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الشركة</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}" {{ $company->id == $purchases->company_id
+                                         ? 'selected' : ''}}>{{ $company->company_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5> المركز الرئيسي <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم الفرع</option>
+                            @foreach($subcompanies as $subcompany)
+                                <option value="{{ $subcompany->id }}" {{ $subcompany->id == $purchases->subcompany_id
+                                         ? 'selected' : ''}}>{{ $subcompany->subcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <h5>اسم المشروع <span class="text-danger">*</span></h5>
+                    <div class="controls">
+                        <select name="subsubcompany_id" class="form-control" readonly>
+                            <option value="" selected="" disabled="">اختيار اسم المشروع</option>
+                            @foreach($subsubcompanies as $subsub)
+                                <option value="{{ $subsub->id }}" {{$subsub->id == $purchases->subsubcompany_id ? 'selected' : '' }}>
+                                    {{ $subsub->subsubcompany_name }}</option>
+                            @endforeach
+                        </select>
+                        @error('subsubcompany_id')
+                        <span class="text-danger"> {{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>السادة</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="gentlemen" value="{{ $purchases->gentlemen }}" placeholder="اسم السادة...">
@@ -32,7 +85,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>عناية الاستاذ</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="professor_care" value="{{ $purchases->professor_care }}" placeholder="عناية الاستاذ...">
@@ -41,9 +94,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم طلب المواد</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="order_material_id" value="{{ $purchases->id }}" readonly>
@@ -52,7 +103,9 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>تاريخ طلب الشراء</label><span style="color: red;">  *</span>
                     <input type="date" class="form-control" name="order_purchase_date" value="{{ $purchases->order_purchase_date }}" placeholder="التاريخ...">
@@ -61,18 +114,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>اسم المشروع</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="project_name" value="{{ $purchases->project_name }}" readonly>
-                    @error('project_name')
-                    <span class="text-danger"> {{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم المشروع</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="project_number" value="{{ $purchases->project_number }}" readonly>
@@ -81,9 +123,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>العنوان</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="address" value="{{ $purchases->address }}" placeholder="العنوان...">
@@ -92,7 +132,9 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>رقم التلفون</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="phone_number" value="{{ $purchases->phone_number }}" placeholder="رقم التلفون...">
@@ -101,9 +143,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>الايميل</label><span style="color: red;">  *</span>
                     <input type="email" class="form-control" name="email" value="{{ $purchases->email }}" placeholder="الايميل...">
@@ -112,7 +152,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>الموضوع</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="subject" value="{{ $purchases->subject }}" placeholder="الموضوع...">
@@ -123,7 +163,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>المخصص المالي</label>
                     <input type="text" class="form-control" name="financial_provision"
@@ -133,7 +173,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>الرقم</label>
                     <input type="text" class="form-control" name="number" value="{{ $purchases->number }}"
@@ -148,7 +188,7 @@
         @foreach($multi_purchase as $key => $multi)
             <input type="hidden" name="multi[]" value="{{$multi->id }}">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>البيان</label>
                         <input type="text" class="form-control" name="purchase_name[]"
@@ -158,7 +198,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>الكمية</label>
                         <input type="text" class="quantity{{$key+1}} form-control" id="quantity" name="quantity[]"
@@ -168,9 +208,7 @@
                         @enderror
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>الوحدة</label>
                         <input type="text" class="form-control" name="unit[]"
@@ -180,7 +218,9 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>رقم الموديل</label>
                         <input type="text" class="form-control" name="model_number[]"
@@ -190,9 +230,7 @@
                         @enderror
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>السعر</label><span style="color: red;">  *</span>
                         <input type="text" class="price{{$key+1}} form-control" name="price[]" id="price"
@@ -202,7 +240,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>الاجمالي</label><span style="color: red;">  *</span>
                         <input type="text" class="total_price form-control" name="total_price[]" id="total_price{{$key+1}}"

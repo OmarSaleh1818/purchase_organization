@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('currency_type');
             $table->string('just');
             $table->integer('bank_id');
+            $table->integer('iban_id');
             $table->string('check_number');
             $table->integer('project_number');
             $table->string('financial_provision');

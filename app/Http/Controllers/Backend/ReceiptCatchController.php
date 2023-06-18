@@ -101,6 +101,7 @@ class ReceiptCatchController extends Controller
             'currency_type' => $request->currency_type,
             'just' => $result,
             'bank_id' => $request->bank_id,
+            'iban_id' => $request->iban_id,
             'check_number' => $request->check_number,
             'purchase_name' => $request->purchase_name,
             'project_number' => $request->project_number,
