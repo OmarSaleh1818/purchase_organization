@@ -59,7 +59,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="payment">
                             @foreach($purchases as $key => $item)
                                 @if($item->status_id == 7)
                                 <tr>
@@ -161,6 +161,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/payment/getPaymentByCompany/"+id,function (data) {
+                $("#payment").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

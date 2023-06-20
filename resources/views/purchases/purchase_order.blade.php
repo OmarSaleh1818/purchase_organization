@@ -46,12 +46,12 @@
                             <thead>
                             <tr>
                                 <th class="border-bottom-0">ID</th>
-                                <th class="border-bottom-0">الفرع</th>
+                                <th class="border-bottom-0">المركز الرئيسي</th>
                                 <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">المخصص المالي</th>
                                 <th class="border-bottom-0">الاستاذ</th>
                                 <th class="border-bottom-0">التاريخ</th>
-                                <th class="border-bottom-0">الوحدة</th>
+                                <th class="border-bottom-0">الرقم</th>
                                 <th class="border-bottom-0">مقدم الطلب</th>
                                 <th class="border-bottom-0">طباعة</th>
                                 <th class="border-bottom-0">التعديل</th>
@@ -59,7 +59,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="purchase_order">
                             @foreach($purchase as $key => $item)
                                 @if($item->status_id == 7)
                                     <tr>
@@ -90,7 +90,7 @@
                                         </td>
                                         <td>
                                             @if($item->status_id == 7)
-                                            <a href="{{ route('add.purchase', $item->id) }}" class="btn btn-primary">اضافة طلب شراء</a>
+                                                <a href="{{ route('add.purchase', $item->id) }}" class="btn btn-primary">اضافة طلب شراء</a>
                                             @elseif($item->status_id == 4)
                                                 <button class="btn btn-danger">تم طلب اصدار دفعة</button>
                                             @elseif($item->status_id == 3)
@@ -183,6 +183,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/purchase/order/getPurchaseOrderByCompany/"+id,function (data) {
+                $("#purchase_order").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

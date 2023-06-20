@@ -19,8 +19,63 @@ class PurchasesController extends Controller
      */
     public function index()
     {
-        $purchases = Purchase::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $purchases = Purchase::orderBy('id', 'DESC')->get();
         return view('purchases.purchase', compact('purchases'));
+    }
+
+    public function getPurchaseByCompany($id) {
+        $purchases = Purchase::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($purchases) {
+            $html .= '';
+            foreach($purchases as $key => $purchase){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$purchase['subcompany']['subcompany_name'].'</td>
+                            <td>'.$purchase['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$purchase->financial_provision.'</td>
+                            <td>'.$purchase->teacher_name.'</td>
+                            <td>'.$purchase->date.'</td>
+                            <td>'.$purchase->number.'</td>
+                            <td>'.$purchase->applicant.'</td>
+                            <td>';
+                if ($purchase->status_id == 1) {
+                    $html .= '<a href="'.route('print.purchase', $purchase->id).'" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.manager.purchase', $purchase->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                $html .= ' </td>
+                            <td>';
+                if ($purchase->status_id == 4) {
+                    // Do something if status_id is 4
+                } elseif ($purchase->status_id == 3) {
+                    // Do something if status_id is 3
+                } elseif ($purchase->status_id == 7) {
+                    // Do something if status_id is 7
+                } else {
+                    $html .= '<a href="'.route('purchases.edit', $purchase->id).'" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                  <a href="'.route('purchase.delete', $purchase->id).'" class="btn btn-danger" title="حذف الطلب" id="delete"><i class="fa fa-trash"></i></a>';
+                }
+                $html .= '  </td>
+                            <td>';
+                if ($purchase->status_id == 1) {
+                    $html .= '<button class="btn btn-primary" disabled>تم الارسال</button>';
+                } elseif ($purchase->status_id == 2) {
+                    $html .= '<button class="btn btn-warning" disabled>تم رفض الطلب</button>';
+                } elseif ($purchase->status_id == 7) {
+                    $html .= '<button class="btn btn-secondary" disabled>تم موافقة المدير</button>';
+                } elseif ($purchase->status_id == 3) {
+                    $html .= '<button class="btn btn-success" disabled>تم طلب الشراء</button>';
+                } elseif ($purchase->status_id == 4) {
+                    $html .= '<button class="btn btn-danger" disabled>تم طلب اصدار دفعة</button>';
+                }
+                $html .= '  </td>
+                        </tr>
+                ';
+            }
+            return $html;
+        }
     }
 
     public function AddOrder() {

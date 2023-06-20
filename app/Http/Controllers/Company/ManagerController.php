@@ -20,132 +20,6 @@ use Illuminate\Support\Facades\DB;
 
 class ManagerController extends Controller
 {
-    public function ManagerView() {
-
-        $payments = Payment::orderBy('id', 'DESC')->get();
-        return view('manager.manager_view', compact('payments'));
-    }
-
-    public function ManagerEdit($id) {
-
-        $payment = Payment::find($id);
-        return view('manager.manager_edit', compact('payment'));
-    }
-
-    public function ManagerUpdate(Request $request, $id) {
-
-        $url = 'https://ahsibli.com/wp-admin/admin-ajax.php?action=date_numbers_1';
-        $data = 'number='.$request->price;
-
-        $options = array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $data,
-            CURLOPT_HTTPHEADER => array(
-                'authority: ahsibli.com',
-                'accept: */*',
-                'accept-language: en-US,en;q=0.9,ar;q=0.8',
-                'content-type: application/x-www-form-urlencoded; charset=UTF-8',
-                'cookie: _gid=GA1.2.1200696489.1685273984; _gat_gtag_UA_166450035_1=1; _ga_ZSCB2L9KV5=GS1.1.1685273984.1.0.1685273984.0.0.0; _ga=GA1.1.554570941.1685273984; __gads=ID=5f01af1de5c542fc-22db0e9221e000e8:T=1685273984:RT=1685273984:S=ALNI_MYwwhfNBetLRtXSGsPPMr4LZdkrEA; __gpi=UID=00000c364d77d5ca:T=1685273984:RT=1685273984:S=ALNI_MZ7D_ac8H9HvpAIArSyXiZTznxl0Q',
-                'origin: https://ahsibli.com',
-                'referer: https://ahsibli.com/tool/number-to-words/',
-                'sec-ch-ua: "Chromium";v="113", "Not-A.Brand";v="24"',
-                'sec-ch-ua-mobile: ?0',
-                'sec-ch-ua-platform: "Linux"',
-                'sec-fetch-dest: empty',
-                'sec-fetch-mode: cors',
-                'sec-fetch-site: same-origin',
-                'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-                'x-requested-with: XMLHttpRequest'
-            )
-        );
-
-// Initialize cURL session
-        $curl = curl_init();
-        curl_setopt_array($curl, $options);
-
-// Execute the request
-        $response = curl_exec($curl);
-
-// Close the cURL session
-        curl_close($curl);
-
-// Extract the desired result using regular expressions
-        $pattern = '/<table class="resultable">.*?<tr><td>الرقم بالحروف<\/td><td>(.*?)<\/td><\/tr>/s';
-        preg_match($pattern, $response, $matches);
-
-        if (isset($matches[1])) {
-            $result = $matches[1];
-        } else {
-            echo 'Error';
-        }
-
-        $request->validate([
-            'number_order' => 'required',
-            'date' => 'required',
-            'gentlemen' => 'required',
-            'supplier_name' => 'required',
-            'price' => 'required',
-            'price_name' => 'required',
-            'due_date' => 'required',
-            'financial_provision' => 'required',
-            'number' => 'required',
-            'bank_name' => 'required',
-        ],[
-            'number_order.required' => 'رقم اصدار طلب دفعة مطلوب',
-            'date.required' => 'التاريخ  مطلوب',
-            'gentlemen.required' => 'اسم السادة مطلوب',
-            'supplier_name.required' => 'اسم المورد مطلوب',
-            'price.required' => 'المبلغ مطلوب',
-            'price_name.required' => 'المبلغ كتابة مطلوب',
-            'due_date.required' => 'التاريخ المستحق للدفعة مطلوب',
-            'financial_provision.required' => 'المخصص المالي مطلوب',
-            'number.required' => 'الرقم مطلوب',
-            'bank_name.required' => 'البنك المسحوب عليه مطلوب',
-        ]);
-        Payment::findOrFail($id)->update([
-            'number_order' => $request->number_order,
-            'date' => $request->date,
-            'project_name' => $request->project_name,
-            'project_number' => $request->project_number,
-            'order_purchase_id' => $request->order_purchase_id,
-            'gentlemen' => $request->gentlemen,
-            'supplier_name' => $request->supplier_name,
-            'price' => $request->price,
-            'price_name' => $result,
-            'due_date' => $request->due_date,
-            'purchase_name' => $request->purchase_name,
-            'financial_provision' => $request->financial_provision,
-            'number' => $request->number,
-            'bank_name' => $request->bank_name,
-            'created_at' => Carbon::now(),
-        ]);
-        $request->session()->flash('status', 'تم تعديل اصدار طلب دفعة بنجاح');
-        return redirect('/manager');
-    }
-
-    public function ManagerSure($id) {
-
-        DB::table('payments')
-            ->where('id', $id)
-            ->update(['status_id' => 7]);
-        return redirect()->back();
-
-    }
-
-    public function ManagerEye($id) {
-
-        $payment = Payment::find($id);
-        return view('manager.manager_eye', compact('payment'));
-    }
-
-    public function EyeUpdate(Request $request) {
-
-        return redirect('/manager');
-    }
-
     public function ManagerReceipt() {
         $receipt = ReceiptOrder::all();
         return view('receipt.approved.manager_receipt', compact('receipt'));
@@ -251,13 +125,11 @@ class ManagerController extends Controller
     }
 
     public function ManagerCommandView() {
-
         $paymentOrder = PaymentOrder::orderBy('id', 'DESC')->get();
         return view('manager.manager_command', compact('paymentOrder'));
     }
 
     public function ManagerCommandEdit($id) {
-
         $companies = Company::all();
         $paymentOrder = PaymentOrder::find($id);
         $subcompanies = SubCompany::all();
@@ -368,6 +240,61 @@ class ManagerController extends Controller
 
         $purchases = Purchase::orderBy('id', 'DESC')->get();
         return view('manager.material_view', compact('purchases'));
+    }
+
+    public function getManagerMaterialByCompany($id) {
+        $purchases = Purchase::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($purchases) {
+            $html .= '';
+            foreach($purchases as $key => $item){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$item['subcompany']['subcompany_name'].'</td>
+                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$item->financial_provision.'</td>
+                            <td>'.$item->teacher_name.'</td>
+                            <td>'.$item->date.'</td>
+                            <td>'.$item->number.'</td>
+                            <td>'.$item->applicant.'</td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="' . route('print.purchase', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } elseif ($item->status_id == 2) {
+                    $html .= '<a href="' . route('print.purchase', $item->id) . '" class="btn btn-danger" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.manager.purchase', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                $html .= ' </td>
+                            <td>';
+                $html .= '<a href="'.route('material.edit', $item->id).'" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                if ($item->status_id == 7) {
+                } elseif ($item->status_id == 3) {
+                } elseif ($item->status_id == 4) {
+                } else {
+                    $html .= '<a href="'.route('material.reject', $item->id).'" class="btn btn-danger"
+                                           title="رفض الطلب" id="delete"><i class="fa fa-trash"></i></a>';
+                }
+                $html .= '  </td>
+                            <td>';
+                if ($item->status_id == 7) {
+                    $html .= '<button class="btn btn-success">تم تاكيد الطلب</button>';
+                } elseif ($item->status_id == 2) {
+                    $html .= '<a href="'.route('material.sure', $item->id).'" class="btn btn-warning">تم رفض الطلب</a>';
+                } elseif ($item->status_id == 3) {
+                    $html .= '<button class="btn btn-secondary">تم طلب الشراء</button>';
+                } elseif ($item->status_id == 4) {
+                    $html .= '<button class="btn btn-dark">تم طلب اصدار دفعة</button>';
+                } else {
+                    $html .= '<a href="'.route('material.sure', $item->id).'" class="btn btn-primary">تاكيد الطلب</a>';
+                }
+                $html .= '  </td>
+                        </tr>
+                ';
+            }
+            return $html;
+        }
     }
 
     public function MaterialEdit($id) {

@@ -26,6 +26,105 @@ class PurchaseOrderController extends Controller
         $purchases = PurchaseOrder::all();
         return view('purchases.purchase_order', compact('purchases', 'purchase'));
     }
+    public function getPurchaseOrderByCompany($id)
+    {
+        $purchases = Purchase::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html = '';
+        if ($purchases) {
+            foreach ($purchases as $key => $purchase) {
+                if ($purchase->status_id == 7) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $purchase['subcompany']['subcompany_name'] . '</td>
+                                    <td>' . $purchase['subsubcompany']['subsubcompany_name'] . '</td>
+                                    <td>' . $purchase->financial_provision . '</td>
+                                    <td>' . $purchase->teacher_name . '</td>
+                                    <td>' . $purchase->date . '</td>
+                                    <td>' . $purchase->number . '</td>
+                                    <td>' . $purchase->applicant . '</td>
+                                    <td>';
+                    if ($purchase->status_id == 1) {
+                        $html .= '<a href="' . route('print.purchase', $purchase->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.purchase', $purchase->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                    <td>';
+                    if ($purchase->status_id == 4) {
+                        // Do something if status_id is 4
+                    } elseif ($purchase->status_id == 3) {
+                        // Do something if status_id is 3
+                    } elseif ($purchase->status_id == 7) {
+                        // Do something if status_id is 7
+                    } else {
+                        $html .= '<a href="' . route('purchases.order.edit', $purchase->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                         ';
+                    }
+                    $html .= '  </td>
+                                <td>';
+                        $html .= '<a href="'.route('add.purchase', $purchase->id).'" class="btn btn-primary"> اضافة طلب شراء</a>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                } elseif ($purchase->status_id == 3) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $purchase['subcompany']['subcompany_name'] . '</td>
+                                    <td>' . $purchase['subsubcompany']['subsubcompany_name'] . '</td>
+                                    <td>' . $purchase->financial_provision . '</td>
+                                    <td>' . $purchase->teacher_name . '</td>
+                                    <td>' . $purchase->date . '</td>
+                                    <td>' . $purchase->number . '</td>
+                                    <td>' . $purchase->applicant . '</td>
+                                    <td>';
+                    if ($purchase->status_id == 1) {
+                        $html .= '<a href="' . route('print.purchase', $purchase->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.purchase', $purchase->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                <td>';
+
+                    $html .= '  </td>
+                                    <td>';
+                        $html .= '<button class="btn btn-success" disabled>تم طلب الشراء</button>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                } elseif ($purchase->status_id == 4) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $purchase['subcompany']['subcompany_name'] . '</td>
+                                    <td>' . $purchase['subsubcompany']['subsubcompany_name'] . '</td>
+                                    <td>' . $purchase->financial_provision . '</td>
+                                    <td>' . $purchase->teacher_name . '</td>
+                                    <td>' . $purchase->date . '</td>
+                                    <td>' . $purchase->number . '</td>
+                                    <td>' . $purchase->applicant . '</td>
+                                    <td>';
+                    if ($purchase->status_id == 1) {
+                        $html .= '<a href="' . route('print.purchase', $purchase->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.purchase', $purchase->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                <td>';
+
+                    $html .= '  </td>
+                                <td>';
+                        $html .= '<button class="btn btn-danger" disabled>تم طلب اصدار دفعة</button>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                }
+
+            }
+            return $html;
+        }
+    }
 
     public function AddPurchase($id) {
 

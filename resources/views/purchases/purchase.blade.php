@@ -49,7 +49,7 @@
                             <thead>
                             <tr>
                                 <th class="border-bottom-0">ID</th>
-                                <th class="border-bottom-0">الفرع</th>
+                                <th class="border-bottom-0">المركز الرئيسي</th>
                                 <th class="border-bottom-0">المشروع</th>
                                 <th class="border-bottom-0">المخصص المالي</th>
                                 <th class="border-bottom-0">الاستاذ</th>
@@ -62,7 +62,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="purchase_company">
                             @foreach($purchases as $key => $purchase)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -76,7 +76,7 @@
                                     <td>
                                         @if($purchase->status_id == 1)
                                             <a href="{{ route('print.purchase', $purchase->id) }}" class="btn btn-secondary"
-                                           title="طباعة"><i class="fa fa-print"></i></a>
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         @else
                                             <a href="{{ route('print.manager.purchase', $purchase->id) }}" class="btn btn-warning"
                                                title="طباعة"><i class="fa fa-print"></i></a>
@@ -87,10 +87,10 @@
                                         @elseif($purchase->status_id == 3)
                                         @elseif($purchase->status_id == 7)
                                         @else
-                                        <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-info"
-                                           title="تعديل الطلب"><i class="las la-pen"></i></a>
-                                        <a href="{{ route('purchase.delete', $purchase->id) }}" class="btn btn-danger"
-                                           title="حذف الطلب" id="delete"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('purchases.edit', $purchase->id) }}" class="btn btn-info"
+                                               title="تعديل الطلب"><i class="las la-pen"></i></a>
+                                            <a href="{{ route('purchase.delete', $purchase->id) }}" class="btn btn-danger"
+                                               title="حذف الطلب" id="delete"><i class="fa fa-trash"></i></a>
                                         @endif
                                     </td>
                                     <td>
@@ -124,6 +124,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/purchase/getPurchaseByCompany/"+id,function (data) {
+                $("#purchase_company").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

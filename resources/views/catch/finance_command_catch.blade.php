@@ -62,7 +62,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="finance_catch">
                             @foreach($catches as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -90,11 +90,11 @@
                                         @if($item->status_id == 1)
                                             <a href="{{ route('finance.command.sure', $item->id) }}" class="btn btn-primary">تاكيد الطلب</a>
                                         @elseif($item->status_id == 7)
-                                            <button class="btn btn-dark">تم موافقة المدير</button>
+                                            <button class="btn btn-secondary">تم موافقة المدير</button>
                                         @elseif($item->status_id == 6)
                                             <button class="btn btn-success">تم تاكيد الطلب</button>
                                         @elseif($item->status_id == 3)
-                                            <button class="btn btn-danger">تم اصدار سند قبض</button>
+                                            <button class="btn btn-dark">تم اصدار سند قبض</button>
                                         @else
                                             <button class="btn btn-primary">تم الارسال</button>
                                         @endif
@@ -117,6 +117,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/finance/command/getFinanceCommandCatch/"+id,function (data) {
+                $("#finance_catch").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

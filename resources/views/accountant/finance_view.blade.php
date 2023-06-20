@@ -58,7 +58,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="payment_finance">
                             @foreach($payments as $key => $item)
                                 @if($item->status_id == 5)
                                 <tr>
@@ -70,16 +70,8 @@
                                     <td>{{ $item->batch_payment }}</td>
                                     <td>{{ $item->due_date }}</td>
                                     <td>
-                                        @if($item->status_id == 1)
-                                            <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
-                                               title="طباعة"><i class="fa fa-print"></i></a>
-                                        @elseif($item->status_id == 2)
-                                            <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
-                                               title="طباعة"><i class="fa fa-print"></i></a>
-                                        @else
-                                            <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
-                                               title="طباعة"><i class="fa fa-print"></i></a>
-                                        @endif
+                                        <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                           title="طباعة"><i class="fa fa-print"></i></a>
                                     </td>
                                     <td>
                                         <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
@@ -100,16 +92,8 @@
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @elseif($item->status_id == 2)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
                                             <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
@@ -130,23 +114,15 @@
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @elseif($item->status_id == 2)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
                                             <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
                                                title="تعديل الطلب "><i class="las la-pen"></i></a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger">تم موافقة المدير</button>
+                                            <button class="btn btn-secondary">تم موافقة المدير</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -160,23 +136,15 @@
                                         <td>{{ $item->batch_payment }}</td>
                                         <td>{{ $item->due_date }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @elseif($item->status_id == 2)
-                                                <a href="{{ route('print.payment', $item->id) }}" class="btn btn-danger"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.manager.payment', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('finance.eye', $item->id) }}" class="btn btn-info"
+                                            <a href="{{ route('finance.edit', $item->id) }}" class="btn btn-info"
                                                title="عرض الطلب "><i class="las la-eye"></i></a>
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger">تم الدفع</button>
+                                            <button class="btn btn-dark">تم الدفع</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -197,6 +165,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/finance/getPaymentFinanceByCompany/"+id,function (data) {
+                $("#payment_finance").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

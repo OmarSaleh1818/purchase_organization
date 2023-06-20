@@ -20,6 +20,7 @@ use App\Http\Controllers\User\RoleController;
 use App\Http\Controllers\Backend\CommandCatchController;
 use App\Http\Controllers\Backend\ReceiptCatchController;
 use App\Http\Controllers\Backend\AccountCatchController;
+use App\Http\Controllers\Backend\FinanceCatchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,7 @@ Route::resource('invoices', InvoicesController::class);
 
 // All Material Order route
 Route::resource('purchases', PurchasesController::class);
+Route::get('/purchase/getPurchaseByCompany/{id}', [PurchasesController::class, 'getPurchaseByCompany']);
 Route::get('/add/order', [PurchasesController::class, 'AddOrder'])->name('add.order');
 Route::get('/purchases/delete/{id}', [PurchasesController::class, 'PurchaseDelete'])->name('purchase.delete');
 Route::get('/print/purchase/{id}', [PurchasesController::class, 'PrintPurchase'])->name('print.purchase');
@@ -63,6 +65,7 @@ Route::get('/print/manager/purchase/{id}', [PurchasesController::class, 'PrintMa
 
 // All Purchase Order Route
 Route::resource('purchase/order', PurchaseOrderController::class);
+Route::get('/purchase/order/getPurchaseOrderByCompany/{id}', [PurchaseOrderController::class, 'getPurchaseOrderByCompany']);
 Route::get('/add/purchase/{id}', [PurchaseOrderController::class, 'AddPurchase'])->name('add.purchase');
 Route::get('/purchase/order/edit/{id}', [PurchaseOrderController::class, 'PurchaseOrderEdit'])->name('purchases.order.edit');
 Route::post('/purchase/order/update/{id}', [PurchaseOrderController::class, 'PurchaseOrderUpdate'])->name('purchases.order.update');
@@ -76,6 +79,7 @@ Route::get('/print/manager/order/{id}', [PurchaseOrderController::class, 'PrintM
 
 // All Payment Route
 Route::resource('payment', PaymentController::class)->middleware(['auth', 'verified']);
+Route::get('/payment/getPaymentByCompany/{id}', [PaymentController::class, 'getPaymentByCompany']);
 Route::get('/add/payment/{id}', [PaymentController::class, 'AddPayment'])->name('add.payment');
 Route::get('/payment/purchase/edit/{id}', [PaymentController::class, 'PaymentPurchaseEdit'])
     ->name('payment.purchase.edit');
@@ -95,6 +99,7 @@ Route::get('/batch/payment/{id}', [PaymentController::class, 'BatchPayment'])
 
 // All Payment Order Route
 Route::resource('command/pay', PaymentOrderController::class);
+Route::get('/payment/order/getPaymentOrderByCompany/{id}', [PaymentOrderController::class, 'getPaymentOrderByCompany']);
 Route::get('/add/command', [PaymentOrderController::class, 'PaymentOrder'])->name('add.command');
 Route::post('/command/store', [PaymentOrderController::class, 'CommandStore'])->name('command.store');
 Route::get('/print/command/{id}', [PaymentOrderController::class, 'PrintCommand'])->name('print.command');
@@ -116,6 +121,7 @@ Route::get('/print/receipt/command/{id}', [CatchReceiptController::class, 'Print
 Route::get('catch/receipt', [CatchReceiptController::class, 'CatchReceipt']);
 Route::get('/print/receipt/{id}', [CatchReceiptController::class, 'PrintReceipt'])->name('print.receipt');
 Route::get('/account/receipt', [CatchReceiptController::class, 'AccountReceipt']);
+Route::get('/account/receipt/getAccountReceiptByCompany/{id}', [CatchReceiptController::class, 'getAccountReceiptByCompany']);
 Route::get('/account/receipt/edit/{id}', [CatchReceiptController::class, 'AccountReceiptEdit'])
     ->name('account.receipt.edit');
 Route::post('/account/receipt/update/{id}', [CatchReceiptController::class, 'AccountReceiptUpdate'])
@@ -126,6 +132,7 @@ Route::get('/sure/account/receipt/{id}', [CatchReceiptController::class, 'SureAc
 
 // All Accountant route
 Route::get('accountant', [AccountantController::class, 'AccountantView']);
+Route::get('/accountant/getPaymentAccountByCompany/{id}', [AccountantController::class, 'getPaymentAccountByCompany']);
 Route::get('/payment/edit/{id}', [AccountantController::class, 'PaymentEdit'])->name('payment.edit');
 Route::post('/account/update/{id}', [AccountantController::class, 'AccountUpdate'])->name('account.update');
 Route::get('/account/sure/{id}', [AccountantController::class, 'AccountSure'])->name('account.sure');
@@ -135,8 +142,14 @@ Route::post('/account/eye/update/{id}', [AccountantController::class, 'AccountEy
 
 // All Account Catch
 Route::get('account/catch', [AccountCatchController::class, 'AccountCatchView']);
+Route::get('/accountant/getAccountCatchByCompany/{id}', [AccountCatchController::class, 'getAccountcatchByCompany']);
 Route::get('add/account/catch',  [AccountCatchController::class, 'AddAccountCatch'])->name('add.account.catch');
-Route::post('/account/catch/store', [AccountCatchController::class, 'AccountCatchStore'])->name('account.catch.store');
+Route::post('/account/catch/store', [AccountCatchController::class, 'AccountCatchStore'])
+    ->name('account.catch.store');
+Route::post('/accountant/catch/update/{id}', [AccountCatchController::class, 'AccountantCatchUpdate'])
+    ->name('accountant.catch.update');
+
+Route::get('/accountant/catch/edit/{id}', [AccountCatchController::class, 'AccountantCatchEdit'])->name('accountant.catch.edit');
 Route::get('add/safe/catch',  [AccountCatchController::class, 'AddSafeCatch'])->name('add.safe.catch');
 Route::post('/safe/catch/store', [AccountCatchController::class, 'SafeCatchStore'])->name('safe.catch.store');
 
@@ -144,12 +157,16 @@ Route::post('/safe/catch/store', [AccountCatchController::class, 'SafeCatchStore
 
 // All Finance Route
 Route::get('finance', [AccountantController::class, 'FinanceView']);
+Route::get('/finance/getPaymentFinanceByCompany/{id}', [AccountantController::class, 'getPaymentFinanceByCompany']);
 Route::get('/finance/sure/{id}', [AccountantController::class, 'FinanceSure'])->name('finance.sure');
 Route::get('/finance/edit/{id}', [AccountantController::class, 'FinanceEdit'])->name('finance.edit');
 Route::post('/finance/update/{id}', [AccountantController::class, 'FinanceUpdate'])->name('finance.update');
 Route::get('/finance/eye/{id}', [AccountantController::class, 'FinanceEye'])->name('finance.eye');
 Route::post('/finance/eye/update', [AccountantController::class, 'FinanceEyeUpdate'])->name('financeye.update');
+
+
 Route::get('/finance/receipt', [CatchReceiptController::class, 'FinanceReceipt']);
+Route::get('/finance/getFinanceReceiptByCompany/{id}', [CatchReceiptController::class, 'getFinanceReceiptByCompany']);
 Route::get('/finance/receipt/edit/{id}', [CatchReceiptController::class, 'FinanceReceiptEdit'])
     ->name('finance.receipt.edit');
 Route::post('/finance/receipt/update/{id}', [CatchReceiptController::class, 'FinanceReceiptUpdate'])
@@ -157,6 +174,8 @@ Route::post('/finance/receipt/update/{id}', [CatchReceiptController::class, 'Fin
 Route::get('/sure/finance/receipt/{id}', [CatchReceiptController::class, 'FinanceAccountSure'])->name('sure.finance.receipt');
 
 Route::get('finance/command', [AccountantController::class, 'FinanceCommandView']);
+Route::get('/finance/getFinanceCommandByCompany/{id}', [AccountantController::class, 'getFinanceCommandByCompany']);
+
 Route::get('/command/sure/{id}', [AccountantController::class, 'FinanceCommandSure'])->name('command.sure');
 Route::get('/command/edit/{id}', [AccountantController::class, 'FinanceCommandEdit'])->name('command.edit');
 Route::post('/command/update/{id}', [AccountantController::class, 'FinanceCommandUpdate'])->name('command.update');
@@ -164,10 +183,6 @@ Route::post('/command/update/{id}', [AccountantController::class, 'FinanceComman
 // End All Finance Route
 
 // All manager Route
-Route::get('manager', [ManagerController::class, 'ManagerView']);
-Route::get('/manager/edit/{id}', [ManagerController::class, 'ManagerEdit'])->name('manager.edit');
-Route::post('/manager/update/{id}', [ManagerController::class, 'ManagerUpdate'])->name('manager.update');
-Route::get('/manager/sure/{id}', [ManagerController::class, 'ManagerSure'])->name('manager.sure');
 Route::get('/manager/receipt', [ManagerController::class, 'ManagerReceipt']);
 Route::get('/manager/receipt/edit/{id}', [ManagerController::class, 'ManagerReceiptEdit'])
     ->name('manager.receipt.edit');
@@ -185,6 +200,8 @@ Route::post('/eye/update', [ManagerController::class, 'EyeUpdate'])->name('eye.u
 
 // All Manager Material Route
 Route::get('manager/material', [ManagerController::class, 'ManagerMaterialView']);
+Route::get('/manager/getManagerMaterialByCompany/{id}', [ManagerController::class, 'getManagerMaterialByCompany']);
+
 Route::get('/material/edit/{id}', [ManagerController::class, 'MaterialEdit'])->name('material.edit');
 Route::post('/material/update/{id}', [ManagerController::class, 'MaterialUpdate'])->name('material.update');
 Route::get('/material/sure/{id}', [ManagerController::class, 'MaterialSure'])->name('material.sure');
@@ -212,6 +229,9 @@ Route::get('/manager/payment/sure/{id}', [ManagerPurchaseController::class, 'Man
 
 // All Account Catch Route
 Route::get('command/catch', [CommandCatchController::class, 'CommandCatchView']);
+Route::get('/account/commandcatch/getAccountCommandCatch/{id}', [CommandCatchController::class,
+    'getAccountCommandCatch']);
+
 Route::get('/add/command/catch',[CommandCatchController::class, 'AddCommandCatch'])->name('add.command.catch');
 Route::post('/catch/store', [CommandCatchController::class, 'CatchStore'])->name('catch.store');
 Route::get('/print/catch/{id}', [CommandCatchController::class, 'PrintCatch'])
@@ -225,13 +245,36 @@ Route::get('safe/command/catch', [CommandCatchController::class, 'SafeCommandCat
 // end account catch route
 
 // All Finance Catch Route
+Route::get('finance/catch', [FinanceCatchController::class, 'FinanceCatchView']);
+Route::get('/finance/getFinanceCatchByCompany/{id}', [FinanceCatchController::class, 'getFinanceCatchByCompany']);
+
+Route::get('/financial/catch/edit/{id}', [FinanceCatchController::class, 'FinancialCatchEdit'])
+    ->name('financial.catch.edit');
+Route::post('/financial/catch/update/{id}', [FinanceCatchController::class, 'FinancialCatchUpdate'])
+    ->name('financial.catch.store');
+Route::get('/financial/catch/sure/{id}', [FinanceCatchController::class, 'FinancialCatchSure'])->name('financial.catch.sure');
+Route::get('/print/financial/{id}', [FinanceCatchController::class, 'PrintFinancial'])
+    ->name('print.financial');
+
 Route::get('finance/command/catch', [CommandCatchController::class, 'FinanceCommandCatchView']);
+Route::get('/finance/command/getFinanceCommandCatch/{id}', [CommandCatchController::class, 'getFinanceCommandCatch']);
+
 Route::get('/finance/command/sure/{id}', [CommandCatchController::class, 'FinanceCommandSure'])
     ->name('finance.command.sure');
 Route::get('/finance/catch/edit/{id}', [CommandCatchController::class, 'FinanceCatchEdit'])
     ->name('finance.catch.edit');
 Route::post('/finance/catch/update/{id}', [CommandCatchController::class, 'FinanceCatchUpdate'])
     ->name('finance.catch.update');
+// end finance catch route
+
+// All Manager catch route
+Route::get('manager/catch', [FinanceCatchController::class, 'ManagerCatchView']);
+Route::get('/managerial/catch/edit/{id}', [FinanceCatchController::class, 'managerialCatchEdit'])
+    ->name('managerial.catch.edit');
+Route::post('/managerial/catch/update/{id}', [FinanceCatchController::class, 'managerialCatchUpdate'])
+    ->name('managerial.catch.update');
+Route::get('/managerial/catch/sure/{id}', [FinanceCatchController::class, 'managerialCatchSure'])
+    ->name('managerial.catch.sure');
 
 Route::get('manager/command/catch', [CommandCatchController::class, 'ManagerCommandCatchView']);
 Route::get('/manager/catch/sure/{id}', [CommandCatchController::class, 'ManagerCatchSure'])
@@ -240,7 +283,7 @@ Route::get('/manager/catch/edit/{id}', [CommandCatchController::class, 'ManagerC
     ->name('manager.catch.edit');
 Route::post('/manager/catch/update/{id}', [CommandCatchController::class, 'ManagerCatchUpdate'])
     ->name('manager.catch.update');
-// end finance catch route
+// end manager catch route
 
 // All Receipt Catch Route
 Route::get('/add/receipt/catch/{id}', [ReceiptCatchController::class, 'AddReceiptCatch'])->name('add.receipt.catch');

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    طباعة امر سند قبض
+    طباعة سند قبض
 @endsection
 @section('css')
     <style>
@@ -16,7 +16,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الخزنة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/طباعة سند قبض</span>
+                <h4 class="content-title mb-0 my-auto">الادارة المالية</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/طباعة سند قبض</span>
             </div>
         </div>
     </div>
@@ -102,11 +102,9 @@
                             </div>
                         </div>
                         <br>
-                        @if($catch->iban_id)
                         <h4 class="invoice-info mr-5"><span>رقم الايبان :</span>
                             <span style="margin-right: 100px;border-style: double">{{ $catch['bankIban']['iban_number'] }} </span></h4>
                         <br>
-                        @endif
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <br>

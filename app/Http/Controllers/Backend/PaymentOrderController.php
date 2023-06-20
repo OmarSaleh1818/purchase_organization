@@ -18,8 +18,51 @@ class PaymentOrderController extends Controller
      */
     public function index()
     {
-        $payments = PaymentOrder::orderBy('status_id', 'ASC')->orderBy('id', 'DESC')->get();
+        $payments = PaymentOrder::orderBy('id', 'DESC')->get();
         return view('payment.payment_order', compact('payments'));
+    }
+
+    public function getPaymentOrderByCompany($id) {
+        $payments = PaymentOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($payments) {
+            $html .= '';
+            foreach($payments as $key => $item){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$item->date.'</td>
+                            <td>'.$item->benefit_name.'</td>
+                            <td>'.$item->price.'</td>
+                            <td>'.$item->just.'</td>
+                            <td>'.$item['bankName']['bank_name'].'</td>
+                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$item->purchase_name.'</td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="' . route('print.command', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.command', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                    $html .= ' </td>
+
+                            <td>';
+                            if ($item->status_id == 6) {
+                                $html .= '<button class="btn btn-success">تم موافقة المالية</button>';
+                            } elseif ($item->status_id == 7) {
+                                $html .= '<button class="btn btn-danger">تم موافقة المدير</button>';
+                            } elseif ($item->status_id == 3) {
+                                $html .= '<button class="btn btn-danger">تم اصدار سند صرف</button>';
+                            } else {
+                                $html .= '<button class="btn btn-primary">تم الارسال</button>';
+                            }
+
+                    $html .= '  </td>
+                            </tr>
+                            ';
+            }
+            return $html;
+        }
     }
 
     public function PaymentOrder() {

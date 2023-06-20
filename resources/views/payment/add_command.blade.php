@@ -133,7 +133,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>رقم الشيك</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="check_number" placeholder="الوحدة...">
+                    <input type="text" class="form-control" name="check_number" placeholder="رقم الشيك...">
                     @error('check_number')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror

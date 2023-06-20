@@ -60,7 +60,7 @@
                             </tr>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="payment_finance">
                             @foreach($receipt as $key => $item)
                                 @if($item->status_id == 5)
                                     <tr>
@@ -72,31 +72,15 @@
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @elseif($item->status_id == 2)
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-danger"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
                                             <a href="{{ route('finance.receipt.edit', $item->id) }}" class="btn btn-info"
                                                title="تعديل الطلب"><i class="las la-pen"></i></a>
                                         </td>
                                         <td>
-                                            @if($item->status_id == 1)
-
-                                            @elseif($item->status_id == 5)
-                                                <a href="{{ route('sure.finance.receipt', $item->id) }}" class="btn btn-primary">تأكيد الطلب</a>
-                                            @elseif($item->status_id == 6)
-                                                <button class="btn btn-secondary">تم تاكيد الطلب</button>
-                                            @elseif($item->status_id == 7)
-                                                <button class="btn btn-danger">تم الاعتماد</button>
-                                            @endif
+                                            <a href="{{ route('sure.finance.receipt', $item->id) }}" class="btn btn-primary">تأكيد الطلب</a>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -110,31 +94,15 @@
                                             <td>{{ $item->financial_provision }}</td>
                                             <td>{{ $item->purchase_name }}</td>
                                             <td>
-                                                @if($item->status_id == 1)
-                                                    <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-secondary"
-                                                       title="طباعة"><i class="fa fa-print"></i></a>
-                                                @elseif($item->status_id == 2)
-                                                    <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-danger"
-                                                       title="طباعة"><i class="fa fa-print"></i></a>
-                                                @else
-                                                    <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
-                                                       title="طباعة"><i class="fa fa-print"></i></a>
-                                                @endif
+                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
                                             </td>
                                             <td>
                                                 <a href="{{ route('finance.receipt.edit', $item->id) }}" class="btn btn-info"
                                                    title="تعديل الطلب"><i class="las la-pen"></i></a>
                                             </td>
                                             <td>
-                                                @if($item->status_id == 1)
-
-                                                @elseif($item->status_id == 5)
-                                                    <a href="{{ route('sure.finance.receipt', $item->id) }}" class="btn btn-primary">تأكيد الطلب</a>
-                                                @elseif($item->status_id == 6)
-                                                    <button class="btn btn-secondary">تم تاكيد الطلب</button>
-                                                @elseif($item->status_id == 7)
-                                                    <button class="btn btn-danger">تم الاعتماد</button>
-                                                @endif
+                                                <button class="btn btn-success">تم تاكيد الطلب</button>
                                             </td>
                                             <td></td>
                                         </tr>
@@ -148,31 +116,15 @@
                                         <td>{{ $item->financial_provision }}</td>
                                         <td>{{ $item->purchase_name }}</td>
                                         <td>
-                                            @if($item->status_id == 1)
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-secondary"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @elseif($item->status_id == 2)
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-danger"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @else
-                                                <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
-                                                   title="طباعة"><i class="fa fa-print"></i></a>
-                                            @endif
+                                            <a href="{{ route('print.receipt', $item->id) }}" class="btn btn-warning"
+                                               title="طباعة"><i class="fa fa-print"></i></a>
                                         </td>
                                         <td>
                                             <a href="{{ route('finance.receipt.edit', $item->id) }}" class="btn btn-info"
                                                title="تعديل الطلب"><i class="las la-pen"></i></a>
                                         </td>
                                         <td>
-                                            @if($item->status_id == 1)
-
-                                            @elseif($item->status_id == 5)
-                                                <a href="{{ route('sure.finance.receipt', $item->id) }}" class="btn btn-primary">تأكيد الطلب</a>
-                                            @elseif($item->status_id == 6)
-                                                <button class="btn btn-secondary">تم تاكيد الطلب</button>
-                                            @elseif($item->status_id == 7)
-                                                <button class="btn btn-danger">تم الاعتماد</button>
-                                            @endif
+                                            <button class="btn btn-danger">تم الاعتماد</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -194,6 +146,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/finance/getFinanceReceiptByCompany/"+id,function (data) {
+                $("#payment_finance").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

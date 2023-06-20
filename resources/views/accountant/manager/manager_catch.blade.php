@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    امر قبض
+    سندات القبض
 @endsection
 @section('css')
     <!-- Internal Data table css -->
@@ -16,7 +16,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">المحاسبة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ امر قبض</span>
+                <h4 class="content-title mb-0 my-auto">المدير العام</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ سندات القبض</span>
             </div>
         </div>
 
@@ -38,10 +38,7 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('add.command.catch') }}" class="btn btn-primary">اضافة امر قبض </a>
-                        <i class="mdi mdi-dots-horizontal text-gray"></i>
-                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -62,43 +59,65 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody id="account_commandcatch">
+                            <tbody>
                             @foreach($catches as $key => $item)
-                                <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{ $item->date }}</td>
-                                    <td>{{ $item->gentlemen }}</td>
-                                    <td>{{ $item->financial_provision }}</td>
-                                    <td>{{ $item->price }}</td>
-                                    <td>{{ $item->just }}</td>
-                                    <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
-                                    <td>{{ $item['bankName']['bank_name'] }}</td>
-                                    <td>
-                                        @if($item->status_id == 1)
-                                            <a href="{{ route('print.catch', $item->id) }}" class="btn btn-secondary"
-                                               title="طباعة"><i class="fa fa-print"></i></a>
-                                        @else
-                                            <a href="{{ route('print.catch', $item->id) }}" class="btn btn-warning"
-                                               title="طباعة"><i class="fa fa-print"></i></a>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('command.catch.edit', $item->id) }}" class="btn btn-info"
-                                           title="edit data"><i class="las la-pen"></i></a>
-                                    </td>
-                                    <td>
-                                        @if($item->status_id == 6)
-                                            <button class="btn btn-success">تم موافقة المالية</button>
-                                        @elseif($item->status_id == 7)
-                                            <button class="btn btn-danger">تم موافقة المدير</button>
-                                        @elseif($item->status_id == 3)
-                                            <button class="btn btn-danger">تم اصدار سند قبض</button>
-                                        @else
-                                            <button class="btn btn-primary">تم الارسال</button>
-                                        @endif
-                                    </td>
-                                    <td></td>
-                                </tr>
+                                @if($item->status_id == 6)
+                                    <tr>
+                                        <td>{{ $key+1 }}</td>
+                                        <td>{{ $item->date }}</td>
+                                        <td>{{ $item->gentlemen }}</td>
+                                        <td>{{ $item->financial_provision }}</td>
+                                        <td>{{ $item->price }}</td>
+                                        <td>{{ $item->just }}</td>
+                                        <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
+                                        <td>{{ $item['bankName']['bank_name'] }}</td>
+                                        <td>
+                                            @if($item->status_id == 1)
+                                                <a href="{{ route('print.financial', $item->id) }}" class="btn btn-secondary"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @else
+                                                <a href="{{ route('print.financial', $item->id) }}" class="btn btn-warning"
+                                                   title="طباعة"><i class="fa fa-print"></i></a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('managerial.catch.edit', $item->id) }}" class="btn btn-info"
+                                               title="edit data"><i class="las la-pen"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('managerial.catch.sure', $item->id) }}" class="btn btn-primary">تأكيد الطلب</a>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                @elseif($item->status_id == 7)
+                                        <tr>
+                                            <td>{{ $key+1 }}</td>
+                                            <td>{{ $item->date }}</td>
+                                            <td>{{ $item->gentlemen }}</td>
+                                            <td>{{ $item->financial_provision }}</td>
+                                            <td>{{ $item->price }}</td>
+                                            <td>{{ $item->just }}</td>
+                                            <td>{{ $item['subsubcompany']['subsubcompany_name'] }}</td>
+                                            <td>{{ $item['bankName']['bank_name'] }}</td>
+                                            <td>
+                                                @if($item->status_id == 1)
+                                                    <a href="{{ route('print.financial', $item->id) }}" class="btn btn-secondary"
+                                                       title="طباعة"><i class="fa fa-print"></i></a>
+                                                @else
+                                                    <a href="{{ route('print.financial', $item->id) }}" class="btn btn-warning"
+                                                       title="طباعة"><i class="fa fa-print"></i></a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('managerial.catch.edit', $item->id) }}" class="btn btn-info"
+                                                   title="edit data"><i class="las la-pen"></i></a>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-dark">تم تاكيد الطلب</button>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -115,14 +134,6 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script>
-        var id = localStorage.getItem('id');
-        $(document).ready(function () {
-            $.get("/account/commandcatch/getAccountCommandCatch/"+id,function (data) {
-                $("#account_commandcatch").html(data);
-            })
-        });
-    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

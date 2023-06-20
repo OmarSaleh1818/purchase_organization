@@ -62,7 +62,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="account_catch">
                             @foreach($catches as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -75,15 +75,15 @@
                                     <td>{{ $item['bankName']['bank_name'] }}</td>
                                     <td>
                                         @if($item->status_id == 1)
-                                            <a href="{{ route('print.catch', $item->id) }}" class="btn btn-secondary"
+                                            <a href="{{ route('print.receipt.catch', $item->id) }}" class="btn btn-secondary"
                                                title="طباعة"><i class="fa fa-print"></i></a>
                                         @else
-                                            <a href="{{ route('print.catch', $item->id) }}" class="btn btn-warning"
+                                            <a href="{{ route('print.receipt.catch', $item->id) }}" class="btn btn-warning"
                                                title="طباعة"><i class="fa fa-print"></i></a>
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('command.catch.edit', $item->id) }}" class="btn btn-info"
+                                        <a href="{{ route('accountant.catch.edit', $item->id) }}" class="btn btn-info"
                                            title="edit data"><i class="las la-pen"></i></a>
                                     </td>
                                     <td>
@@ -107,6 +107,25 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        // Assuming you're using jQuery
+        $(document).ready(function() {
+            // Make an AJAX request to get the HTML content from the controller
+            var id = localStorage.getItem('id');
+            $.ajax({
+                url: '/accountant/getAccountCatchByCompany/'+id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Insert the HTML content into the "example" element
+                    $('#account_catch').html(response.html);
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error if necessary
+                }
+            });
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

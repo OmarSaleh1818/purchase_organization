@@ -23,6 +23,54 @@ class AccountantController extends Controller
         return view('accountant.account_view', compact('payment'));
     }
 
+    public function getPaymentAccountByCompany($id) {
+        $payment = PartialPayment::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($payment) {
+            $html .= '';
+            foreach($payment as $key => $item){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$item->gentlemen.'</td>
+                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$item->supplier_name.'</td>
+                            <td>'.$item->batch_payment.'</td>
+                            <td>'.$item->price_name.'</td>
+                            <td>'.$item->due_date.'</td>
+                            <td>'.$item->financial_provision.'</td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="'.route('print.payment', $item->id).'" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } elseif($item->status_id == 2) {
+                    $html .= '<a href="'.route('print.payment', $item->id).'" class="btn btn-danger" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.manager.payment', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                $html .= ' </td>
+                            <td>';
+                    $html .= '<a href="'.route('payment.edit', $item->id).'" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                $html .= '  </td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="'.route('account.sure', $item->id).'" class="btn btn-primary">تاكيد الطلب</a>';
+                } elseif ($item->status_id == 5) {
+                    $html .= '<button class="btn btn-success" disabled>تم تاكيد الطلب</button>';
+                } elseif ($item->status_id == 6) {
+                    $html .= '<button class="btn btn-secondary" disabled>تم موافقة المالية</button>';
+                } elseif ($item->status_id == 7) {
+                    $html .= '<button class="btn btn-danger" disabled>تم اعتماد المدير</button>';
+                } elseif ($item->status_id == 3) {
+                     $html .= '<button class="btn btn-dark" disabled>تم الدفع</button>';
+                }
+                $html .= '  </td>
+                        </tr>
+                ';
+            }
+            return $html;
+        }
+    }
+
     public function PaymentEdit($id) {
         $companies = Company::all();
         $subcompanies = SubCompany::all();
@@ -236,6 +284,106 @@ class AccountantController extends Controller
         return view('accountant.finance_view', compact('payments'));
     }
 
+    public function getPaymentFinanceByCompany($id) {
+        $payment = PartialPayment::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($payment) {
+            $html .= '';
+            foreach($payment as $key => $item){
+                if ($item->status_id == 5) {
+                    $html .= '
+                         <tr>
+                            <td>' . ($key + 1) . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->gentlemen . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>' . $item->supplier_name . '</td>
+                            <td>' . $item->batch_payment . '</td>
+                            <td>' . $item->due_date . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.manager.payment', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.sure', $item->id) . '" class="btn btn-primary"></i>تأكيد الطلب</a>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                } elseif($item->status_id == 6) {
+                    $html .= '
+                         <tr>
+                            <td>' . ($key + 1) . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->gentlemen . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>' . $item->supplier_name . '</td>
+                            <td>' . $item->batch_payment . '</td>
+                            <td>' . $item->due_date . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.manager.payment', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-success">تم تاكيد الطلب</button>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                } elseif($item->status_id == 7) {
+                    $html .= '
+                         <tr>
+                            <td>' . ($key + 1) . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->gentlemen . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>' . $item->supplier_name . '</td>
+                            <td>' . $item->batch_payment . '</td>
+                            <td>' . $item->due_date . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.manager.payment', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-secondary">تم موافقة المدير</button>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                } elseif($item->status_id == 3) {
+                    $html .= '
+                         <tr>
+                            <td>' . ($key + 1) . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->gentlemen . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>' . $item->supplier_name . '</td>
+                            <td>' . $item->batch_payment . '</td>
+                            <td>' . $item->due_date . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.manager.payment', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-dark">تم الدفع</button>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                }
+            }
+            return $html;
+        }
+    }
+
     public function FinanceSure($id) {
 
         DB::table('partial_payments')
@@ -361,6 +509,50 @@ class AccountantController extends Controller
 
         $paymentOrder = PaymentOrder::orderBy('id', 'DESC')->get();
         return view('accountant.finance_command', compact('paymentOrder'));
+    }
+
+    public function getFinanceCommandByCompany($id) {
+        $paymentOrder = PaymentOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($paymentOrder) {
+            $html .= '';
+            foreach($paymentOrder as $key => $item){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$item->date.'</td>
+                            <td>'.$item->benefit_name.'</td>
+                            <td>'.$item->price.'</td>
+                            <td>'.$item->just.'</td>
+                            <td>'.$item['bankName']['bank_name'].'</td>
+                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$item->purchase_name.'</td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="' . route('print.command', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.command', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                $html .= ' </td>
+                            <td>';
+                $html .= '<a href="'.route('command.edit', $item->id).'" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                $html .= '  </td>
+                            <td>';
+                if ($item->status_id == 6) {
+                    $html .= '<button class="btn btn-success">تم تاكيد الطلب</button>';
+                } elseif ($item->status_id == 7) {
+                    $html .= '<button class="btn btn-secondary">تم موافقة المدير</button>';
+                } elseif ($item->status_id == 3) {
+                    $html .= '<button class="btn btn-dark">تم اصدار سند صرف</button>';
+                } else {
+                    $html .= '<a href="'.route('command.sure', $item->id).'" class="btn btn-primary">تاكيد الطلب</a>';
+                }
+                $html .= '  </td>
+                        </tr>
+                ';
+            }
+            return $html;
+        }
     }
 
     public function FinanceCommandSure($id) {

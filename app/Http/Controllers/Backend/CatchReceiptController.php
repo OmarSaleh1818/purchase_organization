@@ -93,8 +93,53 @@ class CatchReceiptController extends Controller
     }
 
     public function AccountReceipt() {
-        $receipt = ReceiptOrder::all();
+        $receipt = ReceiptOrder::orderBy('id', 'DESC')->get();
         return view('receipt.approved.account_receipt', compact('receipt'));
+    }
+
+    public function getAccountReceiptByCompany($id) {
+        $receipt = ReceiptOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($receipt) {
+            $html .= '';
+            foreach($receipt as $key => $item){
+                $html .= '
+                         <tr>
+                            <td>'.($key + 1).'</td>
+                            <td>'.$item->benefit.'</td>
+                            <td>'.$item->price.'</td>
+                            <td>'.$item['bankName']['bank_name'].'</td>
+                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
+                            <td>'.$item->financial_provision.'</td>
+                            <td>'.$item->purchase_name.'</td>
+                            <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="' . route('print.receipt', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                } else {
+                    $html .= '<a href="'.route('print.receipt', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                }
+                $html .= ' </td>
+                            <td>';
+                $html .= '<a href="' . route('account.receipt.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                         ';
+                $html .= '  </td>
+                                <td>';
+                if ($item->status_id == 1) {
+                    $html .= '<a href="'.route('sure.account.receipt', $item->id).'" class="btn btn-primary"> تأكيد الطلب</a>';
+                } elseif ($item->status_id == 5) {
+                    $html .= '<button class="btn btn-success">تم تأكيد الطلب</button>';
+                } elseif ($item->status_id == 6) {
+                    $html .= '<button class="btn btn-secondary">تم موافقة المالية</button>';
+                } elseif($item->status_id == 7) {
+                    $html .= '<button class="btn btn-danger">تم الاعتماد</button>';
+                }
+
+                $html .= '  </td>
+                            </tr>
+                            ';
+            }
+            return $html;
+        }
     }
 
     public function AccountReceiptEdit($id) {
@@ -200,8 +245,83 @@ class CatchReceiptController extends Controller
     }
 
     public function FinanceReceipt() {
-        $receipt = ReceiptOrder::all();
+        $receipt = ReceiptOrder::orderBy('id', 'DESC')->get();
         return view('receipt.approved.finance_receipt', compact('receipt'));
+    }
+
+    public function getFinanceReceiptByCompany($id) {
+        $receipt = ReceiptOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html ='';
+        if($receipt) {
+            $html .= '';
+            foreach($receipt as $key => $item){
+                if ($item->status_id == 5) {
+                    $html .= '
+                         <tr>
+                            <td>' . ($key + 1) . '</td>
+                            <td>' . $item->benefit . '</td>
+                            <td>' . $item->price . '</td>
+                            <td>' . $item['bankName']['bank_name'] . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->financial_provision . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.receipt', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.receipt.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<a href="' . route('sure.finance.receipt', $item->id) . '" class="btn btn-primary"></i>تأكيد الطلب</a>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                } elseif($item->status_id == 6) {
+                    $html .= '
+                         <tr>
+                             <td>' . ($key + 1) . '</td>
+                            <td>' . $item->benefit . '</td>
+                            <td>' . $item->price . '</td>
+                            <td>' . $item['bankName']['bank_name'] . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->financial_provision . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.receipt', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.receipt.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-success">تم تاكيد الطلب</button>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                } elseif($item->status_id == 7) {
+                    $html .= '
+                         <tr>
+                             <td>' . ($key + 1) . '</td>
+                            <td>' . $item->benefit . '</td>
+                            <td>' . $item->price . '</td>
+                            <td>' . $item['bankName']['bank_name'] . '</td>
+                            <td>' . $item['subsubcompany']['subsubcompany_name'] . '</td>
+                            <td>' . $item->financial_provision . '</td>
+                            <td>' . $item->purchase_name . '</td>
+                            <td>';
+                    $html .= '<a href="' . route('print.receipt', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('finance.receipt.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-dark">تم الاعتماد</button>';
+                    $html .= '  </td>
+                            </tr>
+                    ';
+                }
+            }
+            return $html;
+        }
     }
 
     public function FinanceReceiptEdit($id) {

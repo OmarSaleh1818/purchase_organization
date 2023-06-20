@@ -154,7 +154,7 @@
                                     </td>
                                     <td>
                                         @if($item->status_id == 1)
-                                            <button class="btn btn-dark">تم اصدار سند قبض</button>
+                                            <button class="btn btn-primary">تم ارسال سند قبض</button>
                                         @elseif($item->status_id == 5)
                                             <button class="btn btn-success">تم موافقة المحاسبة</button>
                                         @elseif($item->status_id == 6)

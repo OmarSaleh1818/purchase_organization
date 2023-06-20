@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    اضافة سند قبض
+    تعديل سند قبض
 @endsection
 @section('css')
 @endsection
@@ -9,7 +9,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">الخزنة</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة سند قبض</span>
+                <h4 class="content-title mb-0 my-auto">الادارة المالية</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تعديل سند قبض</span>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
 @section('content')
     <!-- row -->
 
-    <form method="post" action="{{ route('safe.catch.store') }}">
+    <form method="post" action="{{ route('financial.catch.store', $catches->id) }}">
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -28,7 +28,8 @@
                         <select name="company_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار اسم الشركة</option>
                             @foreach($companies as $company)
-                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                <option value="{{ $company->id }}" {{ $company->id == $catches->company_id
+                                         ? 'selected' : ''}}>{{ $company->company_name }}</option>
                             @endforeach
                         </select>
                         @error('company_id')
@@ -44,7 +45,8 @@
                         <select name="subcompany_id" class="form-control">
                             <option value="" selected="" disabled=""> اسم المركز الرئيسي</option>
                             @foreach($subcompanies as $subcompany)
-                                <option value="{{ $subcompany->id }}">{{ $subcompany->subcompany_name }}</option>
+                                <option value="{{ $subcompany->id }}" {{ $subcompany->id == $catches->subcompany_id
+                                         ? 'selected' : ''}}>{{ $subcompany->subcompany_name }}</option>
                             @endforeach
                         </select>
                         @error('subcompany_id')
@@ -62,7 +64,7 @@
                         <select name="subsubcompany_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار اسم المشروع</option>
                             @foreach($subsubcompanies as $subsub)
-                                <option value="{{ $subsub->id }}">
+                                <option value="{{ $subsub->id }}" {{$subsub->id == $catches->subsubcompany_id ? 'selected' : '' }}>
                                     {{ $subsub->subsubcompany_name }}</option>
                             @endforeach
                         </select>
@@ -75,7 +77,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>التاريخ</label><span style="color: red;">  *</span>
-                    <input type="date" class="form-control" name="date" required id="dateInput"placeholder="التاريخ...">
+                    <input type="date" class="form-control" name="date" required id="dateInput"
+                           value="{{ $catches->date }}" placeholder="التاريخ...">
                     @error('date')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -88,7 +91,7 @@
                 <div class="form-group">
                     <label>السيد/السادة</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" required name="gentlemen"
-                           placeholder="السيد / السادة...">
+                           value="{{ $catches->gentlemen }}" placeholder="السيد / السادة...">
                     @error('gentlemen')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -97,7 +100,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>المبلغ</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="price" placeholder="المبلغ...">
+                    <input type="text" class="form-control" name="price"
+                           value="{{ $catches->price }}" placeholder="المبلغ...">
                     @error('price')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -108,7 +112,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>نوع العملة</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="currency_type" value="ريال سعودي" placeholder="نوع العملة...">
+                    <input type="text" class="form-control" name="currency_type" value="ريال سعودي"
+                           value="{{ $catches->currency_type }}" placeholder="نوع العملة...">
                     @error('currency_type')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -117,7 +122,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>البيان</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="purchase_name" placeholder="البيان...">
+                    <input type="text" class="form-control" name="purchase_name"
+                           value="{{ $catches->purchase_name }}" placeholder="البيان...">
                     @error('purchase_name')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -127,12 +133,12 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <h5>البنك المسحوب عليه <span class="text-danger">*</span></h5>
+                    <h5>البنك <span class="text-danger">*</span></h5>
                     <div class="controls">
                         <select name="bank_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار اسم البنك </option>
                             @foreach($banks as $bank)
-                                <option value="{{ $bank->id }}">
+                                <option value="{{ $bank->id }}" {{$bank->id == $catches->bank_id ? 'selected' : '' }}>
                                     {{ $bank->bank_name }}</option>
                             @endforeach
                         </select>
@@ -145,7 +151,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>رقم الشيك</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="check_number" placeholder="رقم الشيك...">
+                    <input type="text" class="form-control" name="check_number"
+                           value="{{ $catches->check_number }}" placeholder="رقم الشيك...">
                     @error('check_number')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -160,7 +167,8 @@
                         <select name="iban_id" class="form-control">
                             <option value="" selected="" disabled="">اختيار الايبان</option>
                             @foreach($banks as $bank)
-                                <option value="{{ $bank->id }}">{{ $bank->iban_number }}</option>
+                                <option value="{{ $bank->id }}" {{$bank->id == $catches->iban_id ? 'selected' : '' }}>
+                                    {{ $bank->iban_number }}</option>
                             @endforeach
                         </select>
                         @error('iban_id')
@@ -172,7 +180,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>رقم المشروع</label><span style="color: red;">  *</span>
-                    <input type="text" class="form-control" name="project_number" placeholder="رقم المشروع...">
+                    <input type="text" class="form-control" name="project_number"
+                           value="{{ $catches->project_number }}" placeholder="رقم المشروع...">
                     @error('project_number')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -184,7 +193,7 @@
                 <div class="form-group">
                     <label>المخصص المالي</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="financial_provision"
-                           placeholder="المخصص المالي...">
+                           value="{{ $catches->financial_provision }}" placeholder="المخصص المالي...">
                     @error('financial_provision')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -194,7 +203,7 @@
                 <div class="form-group">
                     <label>رقم المخصص المالي</label><span style="color: red;">  *</span>
                     <input type="text" class="form-control" name="number_financial"
-                           placeholder="رقم المخصص المالي...">
+                           value="{{ $catches->number_financial }}" placeholder="رقم المخصص المالي...">
                     @error('number_financial')
                     <span class="text-danger"> {{ $message }}</span>
                     @enderror
@@ -203,7 +212,7 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <input type="submit" class="btn btn-info" value="اضافة سند قبض">
+            <input type="submit" class="btn btn-info" value="حفظ">
         </div>
         <br>
     </form>

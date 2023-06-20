@@ -28,6 +28,98 @@ class PaymentController extends Controller
         return view('payment.payment_page', compact('payments', 'purchases'));
     }
 
+    public function getPaymentByCompany($id) {
+        $purchases = PurchaseOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
+        $html = '';
+        if ($purchases) {
+            foreach ($purchases as $key => $item) {
+                if ($item->status_id == 7) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $item->gentlemen . '</td>
+                                    <td>' . $item->order_purchase_number . '</td>
+                                    <td>' . $item->order_purchase_date . '</td>
+                                    <td>' . $item->subject . '</td>
+                                    <td>' . $item->address . '</td>
+                                    <td>' . $item->delivery_date . '</td>
+                                    <td>' . $item->total_vat . '</td>
+                                    <td>';
+                    if ($item->status_id == 1) {
+                        $html .= '<a href="' . route('print.orderpurchase', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.orderpurchase', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                    <td>';
+                        $html .= '<a href="' . route('payment.purchase.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                         ';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<a href="'.route('add.partial.payment', $item->id).'" class="btn btn-primary"> طلب اصدار دفعة</a>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                } elseif ($item->status_id == 4) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $item->gentlemen . '</td>
+                                    <td>' . $item->order_purchase_number . '</td>
+                                    <td>' . $item->order_purchase_date . '</td>
+                                    <td>' . $item->subject . '</td>
+                                    <td>' . $item->address . '</td>
+                                    <td>' . $item->delivery_date . '</td>
+                                    <td>' . $item->total_vat . '</td>
+                                    <td>';
+                    if ($item->status_id == 1) {
+                        $html .= '<a href="' . route('print.orderpurchase', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.orderpurchase', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('payment.purchase.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                         ';
+                    $html .= '  </td>
+                                    <td>';
+                    $html .= '<a href="'.route('add.partial.payment', $item->id).'" class="btn btn-primary"> طلب اصدار دفعة</a>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                } elseif ($item->status_id == 2) {
+                    $html .= '
+                                 <tr>
+                                    <td>' . ($key + 1) . '</td>
+                                    <td>' . $item->gentlemen . '</td>
+                                    <td>' . $item->order_purchase_number . '</td>
+                                    <td>' . $item->order_purchase_date . '</td>
+                                    <td>' . $item->subject . '</td>
+                                    <td>' . $item->address . '</td>
+                                    <td>' . $item->delivery_date . '</td>
+                                    <td>' . $item->total_vat . '</td>
+                                    <td>';
+                    if ($item->status_id == 1) {
+                        $html .= '<a href="' . route('print.orderpurchase', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
+                    } else {
+                        $html .= '<a href="' . route('print.manager.orderpurchase', $item->id) . '" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
+                    }
+                    $html .= ' </td>
+                                <td>';
+                    $html .= '<a href="' . route('payment.purchase.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                         ';
+                    $html .= '  </td>
+                                <td>';
+                    $html .= '<button class="btn btn-danger" disabled>تم رفض الطلب</button>';
+                    $html .= '  </td>
+                                </tr>
+                        ';
+                }
+            }
+            return $html;
+        }
+    }
+
     public function AddPayment($id) {
         $multi_purchase = MultiPurchaseOrder::where('purchaseOrder_id', $id)->get();
         $purchases = PurchaseOrder::find($id);

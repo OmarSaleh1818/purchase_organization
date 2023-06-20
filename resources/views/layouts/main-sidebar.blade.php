@@ -75,6 +75,7 @@
                                 <li><a class="slide-item" href="{{ url('/' . $page='finance') }}">طلبات اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='finance/command') }}">طلبات امر اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='finance/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" href="{{ url('/' . $page='finance/catch') }}">سندات القبض</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='finance/command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>
@@ -93,6 +94,7 @@
                                 <li><a class="slide-item" href="{{ url('/' . $page='manager/payment') }}">طلبات اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='manager/command') }}">طلبات امر اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='manager/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" href="{{ url('/' . $page='manager/catch') }}">سندات القبض</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='manager/command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>

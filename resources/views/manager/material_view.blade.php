@@ -19,7 +19,6 @@
                 <h4 class="content-title mb-0 my-auto">المدير العام</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ طلبات المواد</span>
             </div>
         </div>
-
     </div>
     <!-- breadcrumb -->
 @endsection
@@ -59,7 +58,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="manager_material">
                             @foreach($purchases as $key => $purchase)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -101,9 +100,9 @@
                                                 تم رفض الطلب
                                             </a>
                                         @elseif($purchase->status_id == 3)
-                                            <a href="" class="btn btn-success">تم طلب الشراء</a>
+                                            <button class="btn btn-success">تم طلب الشراء</button>
                                         @elseif($purchase->status_id == 4)
-                                            <a href="" class="btn btn-danger">تم طلب اصدار دفعة</a>
+                                            <button class="btn btn-danger">تم طلب اصدار دفعة</button>
                                         @else
                                             <a href="{{ route('material.sure', $purchase->id) }}" class="btn btn-primary">تاكيد الطلب</a>
                                         @endif
@@ -126,6 +125,14 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    <script>
+        var id = localStorage.getItem('id');
+        $(document).ready(function () {
+            $.get("/manager/getManagerMaterialByCompany/"+id,function (data) {
+                $("#manager_material").html(data);
+            })
+        });
+    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>
