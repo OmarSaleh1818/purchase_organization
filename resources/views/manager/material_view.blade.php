@@ -58,7 +58,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody id="manager_material">
+                            <tbody>
                             @foreach($purchases as $key => $purchase)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -125,14 +125,6 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script>
-        var id = localStorage.getItem('id');
-        $(document).ready(function () {
-            $.get("/manager/getManagerMaterialByCompany/"+id,function (data) {
-                $("#manager_material").html(data);
-            })
-        });
-    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

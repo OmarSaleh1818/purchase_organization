@@ -81,12 +81,8 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($item->status_id == 4)
-
-                                            @else
                                                 <a href="{{ route('purchases.order.edit', $item->id) }}" class="btn btn-info"
                                                    title="edit data"><i class="las la-pen"></i></a>
-                                            @endif
                                         </td>
                                         <td>
                                             @if($item->status_id == 7)

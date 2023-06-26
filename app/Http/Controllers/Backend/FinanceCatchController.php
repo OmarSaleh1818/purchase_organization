@@ -15,53 +15,10 @@ use Illuminate\Support\Facades\DB;
 class FinanceCatchController extends Controller
 {
 
-    public function FinanceCatchView() {
+    public function FinanceCatchView($id) {
 
-        $catches = ReceiptCatch::orderBy('id', 'DESC')->get();
-        return view('accountant.finance.finance_catch', compact('catches'));
-    }
-
-    public function getFinanceCatchByCompany($id) {
         $catches = ReceiptCatch::where('company_id', $id)->orderBy('id', 'DESC')->get();
-        $html ='';
-        if($catches) {
-            $html .= '';
-            foreach($catches as $key => $item){
-                $html .= '
-                         <tr>
-                            <td>'.($key + 1).'</td>
-                            <td>'.$item->date.'</td>
-                            <td>'.$item->gentlemen.'</td>
-                            <td>'.$item->financial_provision.'</td>
-                            <td>'.$item->price.'</td>
-                            <td>'.$item->just.'</td>
-                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
-                            <td>'.$item['bankName']['bank_name'].'</td>
-                            <td>';
-                if ($item->status_id == 1) {
-                    $html .= '<a href="' . route('print.financial', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
-                } else {
-                    $html .= '<a href="'.route('print.financial', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
-                }
-                $html .= ' </td>
-                            <td>';
-                $html .= '<a href="' . route('financial.catch.edit', $item->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
-                         ';
-                $html .= '  </td>
-                                <td>';
-                if ($item->status_id == 1) {
-                    $html .= '<a href="'.route('financial.catch.sure', $item->id).'" class="btn btn-primary"> تأكيد الطلب</a>';
-                } elseif ($item->status_id == 6) {
-                    $html .= '<button class="btn btn-success">تم تأكيد الطلب</button>';
-                } elseif($item->status_id == 7) {
-                    $html .= '<button class="btn btn-danger">تم الاعتماد</button>';
-                }
-                $html .= '  </td>
-                            </tr>
-                            ';
-            }
-            return $html;
-        }
+        return view('accountant.finance.finance_catch', compact('catches'));
     }
 
     public function FinancialCatchEdit($id) {
@@ -158,7 +115,7 @@ class FinanceCatchController extends Controller
         ]);
 
         $request->session()->flash('status', 'تم حفظ سند القبض بنجاح');
-        return redirect('/finance/catch');
+        return redirect('/finance/catch/'.$request->company_id);
     }
 
     public function FinancialCatchSure($id) {
@@ -174,8 +131,8 @@ class FinanceCatchController extends Controller
         return view('print.finance.finance_catch', compact('catch'));
     }
 
-    public function ManagerCatchView() {
-        $catches = ReceiptCatch::orderBy('id', 'DESC')->get();
+    public function ManagerCatchView($id) {
+        $catches = ReceiptCatch::where('company_id', $id)->orderBy('id', 'DESC')->get();
         return view('accountant.manager.manager_catch', compact('catches'));
     }
 
@@ -272,7 +229,7 @@ class FinanceCatchController extends Controller
         ]);
 
         $request->session()->flash('status', 'تم حفظ سند القبض بنجاح');
-        return redirect('/manager/catch');
+        return redirect('/manager/catch/'.$request->company_id);
     }
 
     public function managerialCatchSure($id) {

@@ -90,9 +90,11 @@
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <br>
+                                @if($catch->bank_id)
                                 <h4 class="invoice-info"><span>البنك :</span>
                                     <span style="border-style: double">{{ $catch['bankName']['bank_name'] }}</span></h4>
                                 <br><br>
+                                @endif
                             </div>
                             <div class="col-md">
                                 <p ><span></span>
@@ -102,9 +104,11 @@
                             </div>
                         </div>
                         <br>
+                        @if($catch->iban_id)
                         <h4 class="invoice-info mr-5"><span>رقم الايبان :</span>
                             <span style="margin-right: 100px;border-style: double">{{ $catch['bankIban']['iban_number'] }} </span></h4>
                         <br>
+                        @endif
                         <div class="row mg-t-20">
                             <div class="col-md mr-5">
                                 <br>

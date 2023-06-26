@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\DB;
 
 class ManagerController extends Controller
 {
-    public function ManagerReceipt() {
-        $receipt = ReceiptOrder::all();
+    public function ManagerReceipt($id) {
+        $receipt = ReceiptOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
         return view('receipt.approved.manager_receipt', compact('receipt'));
     }
 
@@ -113,7 +113,7 @@ class ManagerController extends Controller
         ]);
 
         $request->session()->flash('status', 'تم حفظ  سند الصرف بنجاح');
-        return redirect('/manager/receipt');
+        return redirect('/manager/receipt/'.$request->company_id);
     }
 
     public function ManagerReceiptSure($id) {
@@ -124,8 +124,8 @@ class ManagerController extends Controller
         return redirect()->back();
     }
 
-    public function ManagerCommandView() {
-        $paymentOrder = PaymentOrder::orderBy('id', 'DESC')->get();
+    public function ManagerCommandView($id) {
+        $paymentOrder = PaymentOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
         return view('manager.manager_command', compact('paymentOrder'));
     }
 
@@ -222,7 +222,7 @@ class ManagerController extends Controller
         ]);
 
         $request->session()->flash('status', 'تم حفظ امر الدفع بنجاح');
-        return redirect('/manager/command');
+        return redirect('/manager/command/'.$request->company_id);
     }
 
     public function ManagerCommandSure($id) {
@@ -236,65 +236,10 @@ class ManagerController extends Controller
 
     // Manager Material Function
 
-    public function ManagerMaterialView() {
+    public function ManagerMaterialView($id) {
 
-        $purchases = Purchase::orderBy('id', 'DESC')->get();
-        return view('manager.material_view', compact('purchases'));
-    }
-
-    public function getManagerMaterialByCompany($id) {
         $purchases = Purchase::where('company_id', $id)->orderBy('id', 'DESC')->get();
-        $html ='';
-        if($purchases) {
-            $html .= '';
-            foreach($purchases as $key => $item){
-                $html .= '
-                         <tr>
-                            <td>'.($key + 1).'</td>
-                            <td>'.$item['subcompany']['subcompany_name'].'</td>
-                            <td>'.$item['subsubcompany']['subsubcompany_name'].'</td>
-                            <td>'.$item->financial_provision.'</td>
-                            <td>'.$item->teacher_name.'</td>
-                            <td>'.$item->date.'</td>
-                            <td>'.$item->number.'</td>
-                            <td>'.$item->applicant.'</td>
-                            <td>';
-                if ($item->status_id == 1) {
-                    $html .= '<a href="' . route('print.purchase', $item->id) . '" class="btn btn-secondary" title="طباعة"><i class="fa fa-print"></i></a>';
-                } elseif ($item->status_id == 2) {
-                    $html .= '<a href="' . route('print.purchase', $item->id) . '" class="btn btn-danger" title="طباعة"><i class="fa fa-print"></i></a>';
-                } else {
-                    $html .= '<a href="'.route('print.manager.purchase', $item->id).'" class="btn btn-warning" title="طباعة"><i class="fa fa-print"></i></a>';
-                }
-                $html .= ' </td>
-                            <td>';
-                $html .= '<a href="'.route('material.edit', $item->id).'" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>';
-                if ($item->status_id == 7) {
-                } elseif ($item->status_id == 3) {
-                } elseif ($item->status_id == 4) {
-                } else {
-                    $html .= '<a href="'.route('material.reject', $item->id).'" class="btn btn-danger"
-                                           title="رفض الطلب" id="delete"><i class="fa fa-trash"></i></a>';
-                }
-                $html .= '  </td>
-                            <td>';
-                if ($item->status_id == 7) {
-                    $html .= '<button class="btn btn-success">تم تاكيد الطلب</button>';
-                } elseif ($item->status_id == 2) {
-                    $html .= '<a href="'.route('material.sure', $item->id).'" class="btn btn-warning">تم رفض الطلب</a>';
-                } elseif ($item->status_id == 3) {
-                    $html .= '<button class="btn btn-secondary">تم طلب الشراء</button>';
-                } elseif ($item->status_id == 4) {
-                    $html .= '<button class="btn btn-dark">تم طلب اصدار دفعة</button>';
-                } else {
-                    $html .= '<a href="'.route('material.sure', $item->id).'" class="btn btn-primary">تاكيد الطلب</a>';
-                }
-                $html .= '  </td>
-                        </tr>
-                ';
-            }
-            return $html;
-        }
+        return view('manager.material_view', compact('purchases'));
     }
 
     public function MaterialEdit($id) {
@@ -353,7 +298,7 @@ class ManagerController extends Controller
         }
 
         $request->session()->flash('status', 'تم تعديل طلب مواد بنجاح');
-        return redirect('/manager/material');
+        return redirect('/manager/material/'.$request->company_id);
     }
 
     public function MaterialSure($id) {

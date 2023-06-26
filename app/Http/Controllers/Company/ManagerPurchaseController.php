@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\DB;
 class ManagerPurchaseController extends Controller
 {
 
-    public function ManagerPurchaseView() {
+    public function ManagerPurchaseView($id) {
 
-        $purchases = PurchaseOrder::orderBy('id', 'DESC')->get();
+        $purchases = PurchaseOrder::where('company_id', $id)->orderBy('id', 'DESC')->get();
         return view('manager_purchase.purchase_view', compact( 'purchases'));
     }
 
@@ -140,7 +140,7 @@ class ManagerPurchaseController extends Controller
         }
 
         $request->session()->flash('status', 'تم حفظ طلب شراء بنجاح');
-        return redirect('/manager/purchase');
+        return redirect('/manager/purchase/'.$request->company_id);
     }
 
     public function PurchaseSure($id) {
@@ -163,9 +163,9 @@ class ManagerPurchaseController extends Controller
 
     // All Manager Payment Fanction
 
-    public function ManagerPaymentView() {
+    public function ManagerPaymentView($id) {
 
-        $partials = PartialPayment::orderBy('id', 'ASC')->get();
+        $partials = PartialPayment::where('company_id', $id)->orderBy('id', 'ASC')->get();
         return view('manager_purchase.payment_view', compact(  'partials'));
     }
 
@@ -268,7 +268,7 @@ class ManagerPurchaseController extends Controller
         ]);
 
         $request->session()->flash('status', 'تم حفظ  اصدار طلب دفعة بنجاح');
-        return redirect('/manager/payment');
+        return redirect('/manager/payment/'.$request->company_id);
     }
 
     public function ManagerPaymentReject($id) {

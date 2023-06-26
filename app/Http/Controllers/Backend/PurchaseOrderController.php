@@ -51,16 +51,8 @@ class PurchaseOrderController extends Controller
                     }
                     $html .= ' </td>
                                     <td>';
-                    if ($purchase->status_id == 4) {
-                        // Do something if status_id is 4
-                    } elseif ($purchase->status_id == 3) {
-                        // Do something if status_id is 3
-                    } elseif ($purchase->status_id == 7) {
-                        // Do something if status_id is 7
-                    } else {
-                        $html .= '<a href="' . route('purchases.order.edit', $purchase->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
-                         ';
-                    }
+                    $html .= '<a href="' . route('purchases.order.edit', $purchase->id) . '" class="btn btn-info" title="تعديل الطلب"><i class="las la-pen"></i></a>
+                     ';
                     $html .= '  </td>
                                 <td>';
                         $html .= '<a href="'.route('add.purchase', $purchase->id).'" class="btn btn-primary"> اضافة طلب شراء</a>';

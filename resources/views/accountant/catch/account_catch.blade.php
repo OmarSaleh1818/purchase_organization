@@ -62,7 +62,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody id="account_catch">
+                            <tbody>
                             @foreach($catches as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -107,25 +107,6 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script>
-        // Assuming you're using jQuery
-        $(document).ready(function() {
-            // Make an AJAX request to get the HTML content from the controller
-            var id = localStorage.getItem('id');
-            $.ajax({
-                url: '/accountant/getAccountCatchByCompany/'+id,
-                type: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // Insert the HTML content into the "example" element
-                    $('#account_catch').html(response.html);
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error if necessary
-                }
-            });
-        });
-    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

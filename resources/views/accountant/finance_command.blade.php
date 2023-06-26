@@ -59,7 +59,7 @@
                                 <th class="border-bottom-0"></th>
                             </tr>
                             </thead>
-                            <tbody id="finance_command">
+                            <tbody>
                             @foreach($paymentOrder as $key => $payment)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -112,14 +112,6 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script>
-        var id = localStorage.getItem('id');
-        $(document).ready(function () {
-            $.get("/finance/getFinanceCommandByCompany/"+id,function (data) {
-                $("#finance_command").html(data);
-            })
-        });
-    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

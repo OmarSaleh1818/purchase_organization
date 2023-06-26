@@ -60,7 +60,7 @@
                             </tr>
                             </tr>
                             </thead>
-                            <tbody id="payment_order">
+                            <tbody>
                             @foreach($receipt as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
@@ -116,14 +116,6 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <script>
-        var id = localStorage.getItem('id');
-        $(document).ready(function () {
-            $.get("/account/receipt/getAccountReceiptByCompany/"+id,function (data) {
-                $("#payment_order").html(data);
-            })
-        });
-    </script>
     <!-- Internal Data tables -->
     <script src="{{URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js')}}"></script>

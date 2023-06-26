@@ -55,11 +55,11 @@
                                                                                  opacity=".3"/><path d="M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
                                 <span class="side-menu__label">المحاسبة</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ url('/' . $page='accountant') }}">طلبات اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="accountant" href="{{ url('/' . $page='accountant') }}">طلبات اصدار دفعة</a></li>
                                 <li><a class="slide-item" href="{{ url('/' . $page='command/pay') }}">امر دفع نقدي/بنكي</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='account/receipt') }}">سندات الصرف</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='account/catch') }}">سندات القبض</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='command/catch') }}">امر قبض </a></li>
+                                <li><a class="slide-item" id="accountant-receipt" href="{{ url('/' . $page='account/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" id="accountant-catch" href="{{ url('/' . $page='account/catch') }}">سندات القبض</a></li>
+                                <li><a class="slide-item" id="accountcommand-catch" href="{{ url('/' . $page='command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>
                     @endcan
@@ -72,11 +72,11 @@
                                                                                  opacity=".3"/><path d="M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
                                 <span class="side-menu__label">الادارة المالية</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ url('/' . $page='finance') }}">طلبات اصدار دفعة</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='finance/command') }}">طلبات امر اصدار دفعة</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='finance/receipt') }}">سندات الصرف</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='finance/catch') }}">سندات القبض</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='finance/command/catch') }}">امر قبض </a></li>
+                                <li><a class="slide-item" id="finance" href="{{ url('/' . $page='finance') }}">طلبات اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="finance-command" href="{{ url('/' . $page='finance/command') }}">طلبات امر اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="finance-receipt" href="{{ url('/' . $page='finance/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" id="finance-catch" href="{{ url('/' . $page='finance/catch') }}">سندات القبض</a></li>
+                                <li><a class="slide-item" id="finance-command-catch" href="{{ url('/' . $page='finance/command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>
                     @endcan
@@ -89,13 +89,13 @@
                                                                                  opacity=".3"/><path d="M3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2zm2 0h14v14H5V5zm2 5h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg>
                                 <span class="side-menu__label">المدير العام</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/material') }}">طلبات المواد</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/purchase') }}">طلبات الشراء</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/payment') }}">طلبات اصدار دفعة</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/command') }}">طلبات امر اصدار دفعة</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/receipt') }}">سندات الصرف</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/catch') }}">سندات القبض</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='manager/command/catch') }}">امر قبض </a></li>
+                                <li><a class="slide-item" id="material-link" href="{{ url('/' . $page='manager/material') }}">طلبات المواد</a></li>
+                                <li><a class="slide-item" id="purchase-link" href="{{ url('/' . $page='manager/purchase') }}">طلبات الشراء</a></li>
+                                <li><a class="slide-item" id="payment-link" href="{{ url('/' . $page='manager/payment') }}">طلبات اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="command-link" href="{{ url('/' . $page='manager/command') }}">طلبات امر اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="receipt-link" href="{{ url('/' . $page='manager/receipt') }}">سندات الصرف</a></li>
+                                <li><a class="slide-item" id="catch-link" href="{{ url('/' . $page='manager/catch') }}">سندات القبض</a></li>
+                                <li><a class="slide-item" id="commandcatch-link" href="{{ url('/' . $page='manager/command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>
                     @endcan
@@ -104,10 +104,10 @@
                         <li class="slide">
                             <a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}"><svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 24 24" ><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15 11V4H4v8.17l.59-.58.58-.59H6z" opacity=".3"/><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-5 7c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10zM4.59 11.59l-.59.58V4h11v7H5.17l-.58.59z"/></svg><span class="side-menu__label">الخزنة</span><i class="angle fe fe-chevron-down"></i></a>
                             <ul class="slide-menu">
-                                <li><a class="slide-item" href="{{ url('/' . $page='receipt/order') }}">سند صرف طلب اصدار دفعة</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='receipt/command') }}">سند صرف امر دفع</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='catch/receipt') }}">سند قبض نقدي / بنكي</a></li>
-                                <li><a class="slide-item" href="{{ url('/' . $page='safe/command/catch') }}">امر قبض </a></li>
+                                <li><a class="slide-item" id="receipt-order" href="{{ url('/' . $page='receipt/order') }}">سند صرف طلب اصدار دفعة</a></li>
+                                <li><a class="slide-item" id="receipt-command" href="{{ url('/' . $page='receipt/command') }}">سند صرف امر دفع</a></li>
+                                <li><a class="slide-item" id="receipt-catch" href="{{ url('/' . $page='catch/receipt') }}">سند قبض نقدي / بنكي</a></li>
+                                <li><a class="slide-item" id="command-catch" href="{{ url('/' . $page='safe/command/catch') }}">امر قبض </a></li>
                             </ul>
                         </li>
                     @endcan
